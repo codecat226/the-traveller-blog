@@ -1,0 +1,7 @@
+PLAN:
+
+Routes:
+/api/users:
+
+/register
+/login
