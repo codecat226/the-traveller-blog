@@ -1,7 +1,19 @@
+31/10/2022
 PLAN:
 
 Routes:
 /api/users:
 
-/register
-/login
+- ADD VALIDATION MIDDLWARE (express-validator)
+
+/register (POST)
+- get form input from req.body
+- hash password before storing in database
+- store all input as new User in database
+
+/login (POST)
+- get form input from req.body
+- check if user with email exists
+- compare raw password with hashed in database
+- if matches, redirect user to home page
+
