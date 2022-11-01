@@ -1,5 +1,5 @@
 import React from "react";
 
 export const Home = () => {
-  return <main className="home">Home</main>;
+  return <section className="home">Home</section>;
 };

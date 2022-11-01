@@ -3,11 +3,13 @@ import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="nav">
+    <footer className="nav">
       <p>
-        Made with <FaHeart /> by Rikako Nishimura
+        Made with &nbsp;
+        <FaHeart />
+        &nbsp; by Rikako Nishimura
       </p>
-    </div>
+    </footer>
   );
 };
 

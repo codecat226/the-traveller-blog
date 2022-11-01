@@ -22,7 +22,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
     });
     if (newUser) {
       newUser.save();
-      return successRes(res, 201, 'new user created');
+      return successRes(res, 201, 'new user created', newUser);
     } else {
       return errorRes(res, 404, 'could not create user');
     }

@@ -7,9 +7,10 @@ export const errorRes = (res: Response, statusCode: number, message: string) => 
   });
 };
 
-export const successRes = (res: Response, statusCode: number, message: string) => {
+export const successRes = (res: Response, statusCode: number, message: string, data: object) => {
   return res.status(statusCode).send({
     success: true,
-    message: message
+    message: message,
+    data: data
   });
 };
