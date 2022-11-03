@@ -5,6 +5,7 @@ import userRouter from './routes/user.routes';
 
 import { dev } from './config';
 import { connectDB } from './config/db';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -12,7 +13,14 @@ const app = express();
 const PORT = dev.app.port;
 
 // middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  })
+);
+
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));

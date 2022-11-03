@@ -10,11 +10,12 @@ export const registerUserValidaton = [
     const errors = validationResult(req);
     // if errors IS NOT empty (if error exists)
     if (!errors.isEmpty()) {
-      const validationErrors: any = {};
-      const allErrors = errors.array();
-      allErrors.forEach((error) => {
-        validationErrors[error.param] = error.msg;
-      });
+      // const allErrors = errors.array();
+      // allErrors.forEach((error) => {
+      //   validationErrors[error.param] = error.msg;
+      // });
+      const validationErrors: string[] = errors.array().map((error) => error.msg);
+      // console.log(validationErrors);
       return res.status(404).json({
         validationErrors
       });

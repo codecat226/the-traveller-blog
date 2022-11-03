@@ -1,11 +1,22 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { Home, Login, Register, Error, Contact, Profile } from "../pages/Index";
+import {
+  Home,
+  Login,
+  Register,
+  Error,
+  Contact,
+  Profile,
+  Logout,
+} from "../pages/Index";
+import { useAppSelector } from "../app/hooks";
 
 // Create routes for app
 const Index = () => {
+  const { isLoggedIn } = useAppSelector((state) => state.loginR);
   return (
     <BrowserRouter>
       <Navbar />
@@ -15,7 +26,8 @@ const Index = () => {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
+          {isLoggedIn && <Route path="/profile" element={<Profile />}></Route>}
+          {isLoggedIn && <Route path="/logout" element={<Logout />}></Route>}
           <Route path="*" element={<Error />}></Route>
         </Routes>
       </main>

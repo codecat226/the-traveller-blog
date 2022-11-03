@@ -1,5 +1,5 @@
 31/10/2022
-PLAN:
+SERVER side plan:
 
 Routes:
 /api/users:
@@ -16,4 +16,12 @@ Routes:
 - check if user with email exists
 - compare raw password with hashed in database
 - if matches, redirect user to home page
+
+/profile (GET)
+- check cookie id to see if matches,
+- if user with cookie id exists, -->
+- send the user data to frontend
+
+/logout (POST)
+- destroy the cookie
 

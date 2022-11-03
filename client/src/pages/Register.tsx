@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -20,10 +22,9 @@ export const Register = () => {
       phone: Yup.string().required("Required"),
     }),
     onSubmit: async (values, { resetForm }) => {
-      // alert(JSON.stringify(values, null, 2));
-      console.log(values);
       await axios.post("http://localhost:3007/api/users/register", values);
       resetForm({});
+      navigate("/login");
     },
   });
 

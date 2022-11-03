@@ -1,0 +1,27 @@
+03/11/2022
+CLIENT side plan:
+
+- Fix pages: Home, Contact, Error, Login, Register, Profile (Index for single export page)
+
+- Routes (use react-router-dom)
+
+- Register page:
+  - Try using formik for frontend validation.
+  - Get form input from user and post to backend
+
+- Login page:
+  - similar to register, copy paste and make changes
+  - get form input from user and post to backend for authentication
+
+- Profile page:
+ - show user information 
+ - get user info from backend response
+ - render object data one by one
+
+
+- Protected routing:
+  - install redux for to manage state of cookie and use for protected routing
+  - create store
+  - create slice
+   - create reducer with boolean to change loggedIn state
+  - provide store for app with Provider
