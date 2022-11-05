@@ -26,3 +26,10 @@ export const logoutUser = async () => {
   });
   return res.data;
 };
+
+export const refreshToken = async () => {
+  const res = await axios.get(`${baseUrl}refresh`, {
+    withCredentials: true,
+  });
+  return res.data;
+};

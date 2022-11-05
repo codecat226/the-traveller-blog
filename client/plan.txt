@@ -18,6 +18,7 @@ CLIENT side plan:
  - get user info from backend response
  - render object data one by one
 
+04/11/2022
 
 - Protected routing:
   - install redux for to manage state of cookie and use for protected routing
@@ -25,3 +26,23 @@ CLIENT side plan:
   - create slice
    - create reducer with boolean to change loggedIn state
   - provide store for app with Provider
+
+05/11/2022
+- Persist state of isLoggedIn over refreshes: 
+ - Local storage set middleware when calling reducer
+- Refresh token:
+ - call refresh route on a set interval so that token does not expire and can be refreshed
+
+ISSUES:
+-REFRESH TOKEN:
+ - when user logeed in and refresh token working, if changing to contact route,
+ the refresh is not called --> the cookie expires.
+--resolved:
+ - put user state in the redux state so it is available from contact page
+ - if user is loggedin and goes to contact page, keep calling the refreshtoken
+
+05/11/2022
+ - verify email on Register
+ - reset password password
+ - Make blog API
+ 

@@ -17,6 +17,8 @@ Routes:
 - compare raw password with hashed in database
 - if matches, redirect user to home page
 
+03/11/2022
+
 /profile (GET)
 - check cookie id to see if matches,
 - if user with cookie id exists, -->
@@ -25,3 +27,9 @@ Routes:
 /logout (POST)
 - destroy the cookie
 
+05/11/2022
+ - verify email on Register
+ - reset password password
+ - Make blog API
+ 
+/verify-user ()

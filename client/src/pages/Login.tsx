@@ -23,7 +23,7 @@ export const Login = () => {
       // alert(JSON.stringify(values, null, 2));
       try {
         const res = await loginUser(values);
-        console.log("login unser data res", res);
+        console.log("login user data res", res);
         // const cookie = res.data.token;
         // set the token into the store so it can be used in the rest of the project
         dispatch(setLoggedIn(true));

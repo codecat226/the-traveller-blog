@@ -54,6 +54,11 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
     if (!isPW) {
       return errorRes(res, 406, 'email or password does not match');
     }
+    // clear previous cookies if exists
+    if (req.cookies[`${(foundUser as JwtPayload)._id}`]) {
+      req.cookies[`${(foundUser as JwtPayload)._id}`] = '';
+    }
+
     // if all goes well create jwt
     //create payload and import private key:
     const payload: JwtPayload = { id: foundUser._id };
@@ -123,9 +128,6 @@ export const logoutUser: RequestHandler = async (req: Request, res: Response) =>
           message: 'Could nto verify token'
         });
       }
-      // console.log(decoded);
-      req.cookies[`${(decoded as TokenInterface).id}`] = '';
-      res.clearCookie(`${(decoded as TokenInterface).id}`);
     });
     res.status(200).json({
       message: 'user logged out'
@@ -160,35 +162,34 @@ export const createRefreshToken: RequestHandler = async (
 
     //verify the old token
     const privKey: Secret = dev.app.priv_key;
-    jwt.verify(oldToken, String(privKey), function (err, user) {
+    jwt.verify(oldToken, String(privKey), function (err, decoded) {
       if (err) {
         console.log(err);
         return res.status(400).send({
           message: 'Could not verify token'
         });
       }
-      console.log('old token token:', oldToken);
+      console.log('old token :', oldToken);
       //if the token IS verified --> reset OLD cookies in res and req header
-      req.cookies[`${(user as TokenInterface).id}`] = '';
-      res.clearCookie(`${(user as TokenInterface).id}`);
-      console.log('user after clear', user);
+      req.cookies[`${(decoded as TokenInterface).id}`] = '';
+      res.clearCookie(`${(decoded as TokenInterface).id}`);
 
       //generate the NEW token:
-      const payload: JwtPayload = { id: (user as UserDocument)._id };
+      const payload: JwtPayload = { id: (decoded as TokenInterface).id };
       const newToken = jwt.sign(payload, String(privKey), {
-        expiresIn: '30s'
+        expiresIn: '36s'
       });
 
       console.log('new token:', newToken);
       // send the NEW token inside cookie
-      res.cookie(String((user as UserDocument)._id), newToken, {
+      res.cookie(String((decoded as TokenInterface).id), newToken, {
         //Cookies sent to clients can be set for a specific path, not just a domain.
         path: '/',
-        expires: new Date(Date.now() + 1000 * 27),
+        expires: new Date(Date.now() + 1000 * 34),
         httpOnly: true
       });
       // set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request
-      (req as CustomRequest).id = (user as UserDocument)._id;
+      (req as CustomRequest).id = (decoded as UserDocument).id;
       // go next since it is middleware
       next();
     });
