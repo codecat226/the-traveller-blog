@@ -18,11 +18,13 @@ export const isAuthorised: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
+    //first check if there is a cookie available
     if (!req.headers.cookie) {
       return res.status(404).send({
         message: 'no cookie found'
       });
     }
+    //get just the token from the cookie
     const token = req.headers.cookie.split('=')[1];
     if (!token) {
       return res.status(404).send({
@@ -30,7 +32,7 @@ export const isAuthorised: RequestHandler = async (
       });
     }
 
-    // verify token
+    // verify the token
     const privKey: Secret = dev.app.priv_key;
     jwt.verify(token, String(privKey), function (err, decoded) {
       if (err) {
@@ -39,9 +41,8 @@ export const isAuthorised: RequestHandler = async (
           message: 'Could not verify token'
         });
       }
-      // console.log(decoded);
       (req as CustomRequest).id = (decoded as TokenInterface).id;
-      //set the id here so that it can be accessed in the user profile route
+      //set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request
       next();
     });
   } catch (error: any) {

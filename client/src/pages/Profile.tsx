@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { User } from "../types/types";
+import { UserProfile } from "../types/types";
+import { userProfile } from "../services/userServices";
 axios.defaults.withCredentials = true;
 
 export const Profile = () => {
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<UserProfile>({
     email: "",
     name: "",
     phone: "",
   });
   const sendReq = async () => {
     try {
-      const res = await axios.get("http://localhost:3007/api/users/profile", {
-        withCredentials: true,
-      });
-      const { email, name, phone } = res.data.foundUser;
+      const res = await userProfile();
+      const { email, name, phone } = res.foundUser;
       setUser({
         email: email,
         name: name,

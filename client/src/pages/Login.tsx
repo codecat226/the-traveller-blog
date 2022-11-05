@@ -1,10 +1,11 @@
 import React from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
-import { setLoggedIn } from "../features/loginSlice";
+import { setLoggedIn } from "../features/userSlice";
+import { loginUser } from "../services/userServices";
+import { UserLogin } from "../types/types";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -18,14 +19,11 @@ export const Login = () => {
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values: UserLogin, { resetForm }) => {
       // alert(JSON.stringify(values, null, 2));
       try {
-        const res = await axios.post(
-          "http://localhost:3007/api/users/login",
-          values
-        );
-        console.log(res);
+        const res = await loginUser(values);
+        console.log("login unser data res", res);
         // const cookie = res.data.token;
         // set the token into the store so it can be used in the rest of the project
         dispatch(setLoggedIn(true));

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 
 const Navbar = () => {
-  const { isLoggedIn } = useAppSelector((state) => state.loginR);
+  const { isLoggedIn } = useAppSelector((state) => state.userR);
   return (
     <nav className="nav">
       {!isLoggedIn && (
