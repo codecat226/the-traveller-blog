@@ -7,7 +7,8 @@ import {
   loginUser,
   showProfile,
   logoutUser,
-  createRefreshToken
+  createRefreshToken,
+  verifyUser
 } from '../controllers/user.controller';
 
 const router = express.Router();
@@ -15,6 +16,7 @@ const router = express.Router();
 // all routes start with /api/users
 
 router.post('/register', registerUserValidaton, registerUser);
+router.get('/verify', verifyUser);
 router.post('/login', loginUser);
 //when showing profile, we need to check if authorised through the cookie we sent in loginUser
 router.get('/profile', isAuthorised, showProfile);

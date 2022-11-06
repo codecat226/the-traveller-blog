@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { UserRegister } from "../types/types";
 import { registerUser } from "../services/userServices";
+import Modal from "../components/Modal";
 
 export const Register = () => {
   const navigate = useNavigate();
+  const [modal, setModal] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -25,14 +28,20 @@ export const Register = () => {
     onSubmit: async (values: UserRegister, { resetForm }) => {
       try {
         const res = await registerUser(values);
-        console.log("register res data return", res);
+        setModal(res.message);
+        setModalOpen(true);
         resetForm({});
         navigate("/login");
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        setModal(error.response.data.message);
+        setModalOpen(true);
       }
     },
   });
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className="register">
@@ -74,6 +83,7 @@ export const Register = () => {
           <div className="form__section">
             <button type="submit">Register</button>
           </div>
+          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

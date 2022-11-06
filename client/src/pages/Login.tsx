@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -6,10 +6,13 @@ import { useAppDispatch } from "../app/hooks";
 import { setLoggedIn } from "../features/userSlice";
 import { loginUser } from "../services/userServices";
 import { UserLogin } from "../types/types";
+import Modal from "../components/Modal";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [modal, setModal] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,17 +26,23 @@ export const Login = () => {
       // alert(JSON.stringify(values, null, 2));
       try {
         const res = await loginUser(values);
-        console.log("login user data res", res);
-        // const cookie = res.data.token;
         // set the token into the store so it can be used in the rest of the project
         dispatch(setLoggedIn(true));
+        setModal(res.message);
+        setModalOpen(true);
         resetForm({});
         navigate("/profile");
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.log("error", error);
+        setModal(error.response.data.message);
+        setModalOpen(true);
       }
     },
   });
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className="register">
@@ -61,6 +70,7 @@ export const Login = () => {
           <div className="form__section">
             <button type="submit">Login</button>
           </div>
+          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

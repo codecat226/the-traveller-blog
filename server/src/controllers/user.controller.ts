@@ -1,11 +1,13 @@
 import express, { NextFunction, Request, RequestHandler, Response } from 'express';
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import { v4 } from 'uuid';
 
 import { securePassword, decryptPassword } from '../helpers/hashPassword';
 import { errorRes, successRes } from '../helpers/resHelper';
 import User, { UserDocument } from '../models/User';
 import { dev } from '../config';
 import { CustomRequest, TokenInterface } from '../middlewares/authorise';
+import { sendVerifyEmail } from '../utils/sendVerificationEmail';
 
 // registerUser (POST)
 export const registerUser: RequestHandler = async (req: Request, res: Response) => {
@@ -17,17 +19,26 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
     if (password.length < 8) {
       return errorRes(res, 400, 'password must be at least 8 characters long');
     }
+    //check if email already registered:
+    const foundUser = await User.findOne({ email: email });
+    if (foundUser) {
+      return errorRes(res, 400, 'User with this email address already exists');
+    }
     // if correct format input provided then move on:
     const hashPW = await securePassword(password);
     const newUser = new User({
+      id: v4(),
       name: name,
       email: email,
       password: hashPW,
-      phone: phone
+      phone: phone,
+      isVerified: false,
+      isAdmin: false
     });
-    if (newUser) {
-      newUser.save();
-      return successRes(res, 201, 'new user created', newUser);
+    const userData = await newUser.save();
+    if (userData) {
+      sendVerifyEmail(userData.name, userData.email, userData.id, 'Verification Email');
+      return successRes(res, 201, 'new user created, please verify email', userData);
     } else {
       return errorRes(res, 404, 'could not create user');
     }
@@ -54,30 +65,34 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
     if (!isPW) {
       return errorRes(res, 406, 'email or password does not match');
     }
-    // clear previous cookies if exists
-    if (req.cookies[`${(foundUser as JwtPayload)._id}`]) {
-      req.cookies[`${(foundUser as JwtPayload)._id}`] = '';
+    if (foundUser.isVerified) {
+      // clear previous cookies if exists
+      if (req.cookies[`${(foundUser as JwtPayload)._id}`]) {
+        req.cookies[`${(foundUser as JwtPayload)._id}`] = '';
+      }
+
+      // if all goes well create jwt
+      //create payload and import private key:
+      const payload: JwtPayload = { id: foundUser._id };
+      const privKey: Secret = dev.app.priv_key;
+
+      // create the token
+      const token = jwt.sign(payload, String(privKey), {
+        expiresIn: '40s'
+      });
+
+      // send the token inside cookie
+      res.cookie(String(foundUser._id), token, {
+        //Cookies sent to clients can be set for a specific path, not just a domain.
+        path: '/',
+        expires: new Date(Date.now() + 1000 * 38),
+        httpOnly: true
+      });
+      // console.log('user controller, login,', token);
+      return res.status(200).send({ message: 'login success', token: token });
+    } else {
+      return errorRes(res, 400, 'Please verify email first');
     }
-
-    // if all goes well create jwt
-    //create payload and import private key:
-    const payload: JwtPayload = { id: foundUser._id };
-    const privKey: Secret = dev.app.priv_key;
-
-    // create the token
-    const token = jwt.sign(payload, String(privKey), {
-      expiresIn: '40s'
-    });
-
-    // send the token inside cookie
-    res.cookie(String(foundUser._id), token, {
-      //Cookies sent to clients can be set for a specific path, not just a domain.
-      path: '/',
-      expires: new Date(Date.now() + 1000 * 38),
-      httpOnly: true
-    });
-    // console.log('user controller, login,', token);
-    return res.status(200).send({ message: 'login success', token: token });
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
@@ -196,6 +211,40 @@ export const createRefreshToken: RequestHandler = async (
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
+    });
+  }
+};
+
+// GET method /verify
+export const verifyUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.query.id;
+
+    const userUpdated = await User.updateOne(
+      { id: id },
+      {
+        $set: {
+          isVerified: true
+        }
+      }
+    );
+    if (userUpdated) {
+      return successRes(
+        res,
+        200,
+        'user verification successful, close tab and login again',
+        'success'
+      );
+    } else {
+      return errorRes(res, 400, 'user verification unsuccessful');
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: 'server error'
     });
   }
 };

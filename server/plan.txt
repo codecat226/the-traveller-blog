@@ -28,8 +28,10 @@ Routes:
 - destroy the cookie
 
 05/11/2022
+ /verify
  - verify email on Register
  - reset password password
  - Make blog API
  
-/verify-user ()
+/verify (GET)
+  - create verify route in routes

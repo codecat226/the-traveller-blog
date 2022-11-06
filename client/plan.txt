@@ -46,3 +46,8 @@ ISSUES:
  - reset password password
  - Make blog API
  
+ re/verify user
+ - add isVerified to schema
+  1. get email from form
+  2. check if email with account exists, user is already verified?
+  3. send verification email

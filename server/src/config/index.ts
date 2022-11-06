@@ -8,5 +8,9 @@ export const dev = {
   },
   db: {
     mongo_url: process.env.MONGO_URL || ''
+  },
+  smtp: {
+    auth_email: process.env.AUTH_EMAIL || '',
+    auth_pw: process.env.AUTH_PW || ''
   }
 };

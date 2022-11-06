@@ -13,10 +13,8 @@ export const Profile = () => {
 
   const sendFirstReq = async () => {
     try {
-      console.log("send request running");
       const res = await userProfile();
       dispatch(setUser(res.foundUser));
-      console.log(res.foundUser);
       setFirstRender(false);
     } catch (error) {
       console.log(error);
@@ -31,7 +29,6 @@ export const Profile = () => {
   const handleRefresh = useCallback(async () => {
     try {
       const res = await refreshToken();
-      console.log("res from handleRefresh", res);
       dispatch(setUser(res.foundUser));
     } catch (error) {
       console.log(error);

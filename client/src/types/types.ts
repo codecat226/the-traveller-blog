@@ -21,3 +21,8 @@ export type UserLogin = {
   email: string;
   password: string;
 };
+
+export type ModalProps = {
+  message: string;
+  closeModal: Function;
+};
