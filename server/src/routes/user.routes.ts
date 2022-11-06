@@ -8,7 +8,8 @@ import {
   showProfile,
   logoutUser,
   createRefreshToken,
-  verifyUser
+  verifyUser,
+  resendVerifyUser
 } from '../controllers/user.controller';
 
 const router = express.Router();
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.post('/register', registerUserValidaton, registerUser);
 router.get('/verify', verifyUser);
+router.post('/resend-verify', resendVerifyUser);
 router.post('/login', loginUser);
 //when showing profile, we need to check if authorised through the cookie we sent in loginUser
 router.get('/profile', isAuthorised, showProfile);

@@ -38,7 +38,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
     const userData = await newUser.save();
     if (userData) {
       sendVerifyEmail(userData.name, userData.email, userData.id, 'Verification Email');
-      return successRes(res, 201, 'new user created, please verify email', userData);
+      return successRes(res, 201, 'new user created, please verify email');
     } else {
       return errorRes(res, 404, 'could not create user');
     }
@@ -140,9 +140,12 @@ export const logoutUser: RequestHandler = async (req: Request, res: Response) =>
       if (err) {
         console.log(err);
         return res.status(400).send({
-          message: 'Could nto verify token'
+          message: 'Could not verify token'
         });
       }
+      //clear cookies
+      req.cookies[`${(decoded as TokenInterface).id}`] = '';
+      res.clearCookie(`${(decoded as TokenInterface).id}`);
     });
     res.status(200).json({
       message: 'user logged out'
@@ -233,14 +236,37 @@ export const verifyUser: RequestHandler = async (
       }
     );
     if (userUpdated) {
-      return successRes(
-        res,
-        200,
-        'user verification successful, close tab and login again',
-        'success'
-      );
+      return successRes(res, 200, 'user verification successful, close tab and login again');
     } else {
       return errorRes(res, 400, 'user verification unsuccessful');
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: 'server error'
+    });
+  }
+};
+
+// POST method /resend-verify
+export const resendVerifyUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    //try to find user with id passed in url query
+    const { email } = req.body;
+
+    const foundUser = await User.findOne({ email: email });
+    if (foundUser) {
+      if (foundUser.isVerified) {
+        return successRes(res, 200, 'User already verified.');
+      } else {
+        sendVerifyEmail(foundUser.name, foundUser.email, foundUser._id, 'Verification Email');
+        return successRes(res, 200, 'Verification link sent to your email address.');
+      }
+    } else {
+      return errorRes(res, 404, 'No user associated with this email address.');
     }
   } catch (error) {
     res.status(500).send({

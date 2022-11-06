@@ -35,3 +35,13 @@ Routes:
  
 /verify (GET)
   - create verify route in routes
+  - get query id from email link clicked by user
+  - check if the user exists
+  - verify user and send 200 reset
+
+/resend-verify (POST)
+ - get email from req.body form (user)
+ - check if user with email exists in database
+ - resend the verification email
+
+ 
