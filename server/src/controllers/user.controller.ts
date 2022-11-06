@@ -59,7 +59,7 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
     // if correct format input provided then move on:
     const foundUser = await User.findOne({ email: email });
     if (!foundUser) {
-      return errorRes(res, 404, 'User does not exist');
+      return errorRes(res, 404, 'User with this email does not exist');
     }
     const isPW = await decryptPassword(password, foundUser.password);
     if (!isPW) {
@@ -236,7 +236,9 @@ export const verifyUser: RequestHandler = async (
       }
     );
     if (userUpdated) {
-      return successRes(res, 200, 'user verification successful, close tab and login again');
+      return res
+        .status(200)
+        .json({ message: 'user verification successful, please close this tab and login again' });
     } else {
       return errorRes(res, 400, 'user verification unsuccessful');
     }

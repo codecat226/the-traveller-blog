@@ -22,6 +22,10 @@ export type UserLogin = {
   password: string;
 };
 
+export type verifyUser = {
+  email: string;
+};
+
 export type ModalProps = {
   message: string;
   closeModal: Function;

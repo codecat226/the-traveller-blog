@@ -97,6 +97,7 @@ div.form__section {
 .form__section input {
   border: none;
   border-bottom: solid black 1px;
+  width: 15rem;
 }
 
 /* div.card {

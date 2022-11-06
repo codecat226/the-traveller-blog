@@ -10,6 +10,7 @@ import {
   Contact,
   Profile,
   Logout,
+  ResendVerify,
 } from "../pages/Index";
 import { useAppSelector } from "../app/hooks";
 
@@ -26,6 +27,9 @@ const Index = () => {
             <Route path="/register" element={<Register />}></Route>
           )}
           {!isLoggedIn && <Route path="/login" element={<Login />}></Route>}
+          {!isLoggedIn && (
+            <Route path="/resend-verify" element={<ResendVerify />}></Route>
+          )}
           <Route path="/contact" element={<Contact />}></Route>
           {isLoggedIn && <Route path="/profile" element={<Profile />}></Route>}
           {isLoggedIn && <Route path="/logout" element={<Logout />}></Route>}

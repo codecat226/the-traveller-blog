@@ -2,37 +2,29 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
-import { setLoggedIn } from "../features/userSlice";
-import { loginUser } from "../services/userServices";
-import { UserLogin } from "../types/types";
+import { resendVerify } from "../services/userServices";
+import { verifyUser } from "../types/types";
 import Modal from "../components/Modal";
 
-export const Login = () => {
+export const ResendVerify = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [modal, setModal] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
     }),
-    onSubmit: async (values: UserLogin, { resetForm }) => {
+    onSubmit: async (values: verifyUser, { resetForm }) => {
       try {
-        const res = await loginUser(values);
-        // set the token into the store so it can be used in the rest of the project
-        dispatch(setLoggedIn(true));
+        const res = await resendVerify(values);
         setModal(res.message);
         setModalOpen(true);
         resetForm({});
-        navigate("/profile");
+        navigate("/login");
       } catch (error: any) {
-        console.log("error", error);
         setModal(error.response.data.message);
         setModalOpen(true);
       }
@@ -45,7 +37,7 @@ export const Login = () => {
 
   return (
     <div className="register">
-      <h1>Login:</h1>
+      <h1>Resend Verification Email:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
           <div className="form__section">
@@ -56,27 +48,8 @@ export const Login = () => {
             ) : null}
           </div>
           <div className="form__section">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              {...formik.getFieldProps("password")}
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
-            ) : null}
+            <button type="submit">Send Email</button>
           </div>
-          <div className="form__section">
-            <button type="submit">Login</button>
-          </div>
-          <button
-            className="verificationBtn"
-            onClick={() => {
-              navigate("/resend-verify");
-            }}
-          >
-            Resend verification email
-          </button>
           <br />
           {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>

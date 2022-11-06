@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLogin, UserRegister } from "../types/types";
+import { UserLogin, UserRegister, verifyUser } from "../types/types";
 
 const baseUrl = "http://localhost:3007/api/users/";
 
@@ -31,5 +31,10 @@ export const refreshToken = async () => {
   const res = await axios.get(`${baseUrl}refresh`, {
     withCredentials: true,
   });
+  return res.data;
+};
+
+export const resendVerify = async (values: verifyUser) => {
+  const res = await axios.post(`${baseUrl}resend-verify`, values);
   return res.data;
 };
