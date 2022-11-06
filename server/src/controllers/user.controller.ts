@@ -8,6 +8,8 @@ import User, { UserDocument } from '../models/User';
 import { dev } from '../config';
 import { CustomRequest, TokenInterface } from '../middlewares/authorise';
 import { sendVerifyEmail } from '../utils/sendVerificationEmail';
+import { createToken } from '../utils/createToken';
+import { sendPasswordEmail } from '../utils/sendResetPasswordEmail';
 
 // registerUser (POST)
 export const registerUser: RequestHandler = async (req: Request, res: Response) => {
@@ -37,7 +39,8 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
     });
     const userData = await newUser.save();
     if (userData) {
-      sendVerifyEmail(userData.name, userData.email, userData.id, 'Verification Email');
+      const { name, email, id } = userData;
+      sendVerifyEmail(name, email, id, 'Verification Email');
       return successRes(res, 201, 'new user created, please verify email');
     } else {
       return errorRes(res, 404, 'could not create user');
@@ -240,7 +243,7 @@ export const verifyUser: RequestHandler = async (
         .status(200)
         .json({ message: 'user verification successful, please close this tab and login again' });
     } else {
-      return errorRes(res, 400, 'user verification unsuccessful');
+      return errorRes(res, 404, 'user verification unsuccessful');
     }
   } catch (error) {
     res.status(500).send({
@@ -264,11 +267,103 @@ export const resendVerifyUser: RequestHandler = async (
       if (foundUser.isVerified) {
         return successRes(res, 200, 'User already verified.');
       } else {
-        sendVerifyEmail(foundUser.name, foundUser.email, foundUser._id, 'Verification Email');
+        const { name, email, id } = foundUser;
+        sendVerifyEmail(name, email, id, 'Verification Email');
         return successRes(res, 200, 'Verification link sent to your email address.');
       }
     } else {
-      return errorRes(res, 404, 'No user associated with this email address.');
+      return errorRes(res, 400, 'No user associated with this email address.');
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: 'server error'
+    });
+  }
+};
+
+// POST method /forgot-password
+export const forgotPassword: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+    const userData = await User.findOne({ email: email });
+    if (userData) {
+      if (userData.isVerified) {
+        const newToken = createToken();
+        const updatedToken = await User.updateOne(
+          { email: email },
+          {
+            $set: {
+              token: newToken
+            }
+          }
+        );
+        if (updatedToken) {
+          const { id, name, email } = userData;
+          sendPasswordEmail(id, name, email, 'Reset Password', newToken, 'users');
+          return successRes(res, 200, 'password reset email sent.');
+        }
+      } else {
+        return errorRes(res, 400, 'Please verify your email first');
+      }
+    } else {
+      return errorRes(res, 404, 'Failed to find user with email.');
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: 'server error'
+    });
+  }
+};
+
+// GET method /reset-password
+// export const getResetPassword: RequestHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { token } = req.query;
+//     const userData = await User.findOne({ token: token }, { password: 0 });
+//     if (userData) {
+//       return successRes(res, 200, 'Reset password success', userData);
+//     }
+//   } catch (error) {
+//     res.status(500).send({
+//       message: 'server error'
+//     });
+//   }
+// };
+
+// POST method /reset-password
+export const resetPassword: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    //try to find user with token passed in url params
+    const { token } = req.params;
+    const userData = await User.findOne({ token: token });
+    if (userData) {
+      const { password } = req.body;
+      console.log(password);
+      const hashPW = await securePassword(password);
+      await User.findOneAndUpdate(
+        { token: userData.token },
+        {
+          $set: {
+            password: hashPW,
+            token: ''
+          }
+        }
+      );
+      return successRes(res, 201, 'password successfully changed!');
+    } else {
+      errorRes(res, 404, 'Could not find user');
     }
   } catch (error) {
     res.status(500).send({

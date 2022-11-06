@@ -44,4 +44,14 @@ Routes:
  - check if user with email exists in database
  - resend the verification email
 
+/forgot-password (POST)
+ - get email from req.body 
+ - check if user exists
+ - send forgot password link to email
+
+/reset-password (POST/PATCH)
+ - get token from request params
+ - check if user with token exists
+ - get new password from body
+ - update to new password (set in mongodb)
  

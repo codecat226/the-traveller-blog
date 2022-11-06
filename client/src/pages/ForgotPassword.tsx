@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { resendVerify } from "../services/userServices";
-import { VerifyUser } from "../types/types";
+import { forgotPassword } from "../services/userServices";
+import { ForgotUser } from "../types/types";
 import Modal from "../components/Modal";
 
-export const ResendVerify = () => {
-  const navigate = useNavigate();
+export const ForgotPassword = () => {
   const [modal, setModal] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
@@ -17,14 +15,15 @@ export const ResendVerify = () => {
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email address").required("Required"),
     }),
-    onSubmit: async (values: VerifyUser, { resetForm }) => {
+    onSubmit: async (values: ForgotUser, { resetForm }) => {
       try {
-        const res = await resendVerify(values);
+        const res = await forgotPassword(values);
+        // set the token into the store so it can be used in the rest of the project
         setModal(res.message);
         setModalOpen(true);
         resetForm({});
-        navigate("/login");
       } catch (error: any) {
+        console.log("error", error);
         setModal(error.response.data.message);
         setModalOpen(true);
       }
@@ -37,7 +36,7 @@ export const ResendVerify = () => {
 
   return (
     <div className="register">
-      <h1>Resend Verification Email:</h1>
+      <h1>Forgot Password:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
           <div className="form__section">
@@ -48,7 +47,7 @@ export const ResendVerify = () => {
             ) : null}
           </div>
           <div className="form__section">
-            <button type="submit">Send Email</button>
+            <button type="submit">Send reset-password email</button>
           </div>
           {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>

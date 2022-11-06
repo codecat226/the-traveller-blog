@@ -22,8 +22,16 @@ export type UserLogin = {
   password: string;
 };
 
-export type verifyUser = {
+export type VerifyUser = {
   email: string;
+};
+
+export type ForgotUser = {
+  email: string;
+};
+
+export type ResetUser = {
+  password: string;
 };
 
 export type ModalProps = {

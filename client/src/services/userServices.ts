@@ -1,5 +1,11 @@
 import axios from "axios";
-import { UserLogin, UserRegister, verifyUser } from "../types/types";
+import {
+  ForgotUser,
+  ResetUser,
+  UserLogin,
+  UserRegister,
+  VerifyUser,
+} from "../types/types";
 
 const baseUrl = "http://localhost:3007/api/users/";
 
@@ -34,7 +40,20 @@ export const refreshToken = async () => {
   return res.data;
 };
 
-export const resendVerify = async (values: verifyUser) => {
+export const resendVerify = async (values: VerifyUser) => {
   const res = await axios.post(`${baseUrl}resend-verify`, values);
+  return res.data;
+};
+
+export const forgotPassword = async (values: ForgotUser) => {
+  const res = await axios.post(`${baseUrl}forgot-password`, values);
+  return res.data;
+};
+
+export const resetPassword = async (
+  values: ResetUser,
+  token: string | undefined
+) => {
+  const res = await axios.post(`${baseUrl}reset-password/${token}`, values);
   return res.data;
 };

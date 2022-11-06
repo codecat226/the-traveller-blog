@@ -72,12 +72,19 @@ export const Login = () => {
           <button
             className="verificationBtn"
             onClick={() => {
+              navigate("/forgot-password");
+            }}
+          >
+            Forgot Password?
+          </button>
+          <button
+            className="verificationBtn"
+            onClick={() => {
               navigate("/resend-verify");
             }}
           >
             Resend verification email
           </button>
-          <br />
           {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>

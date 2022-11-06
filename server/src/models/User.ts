@@ -8,6 +8,7 @@ export interface UserDocument extends Document {
   phone: string;
   isVerified: boolean;
   isAdmin: boolean;
+  token: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -40,6 +41,10 @@ const userSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
     default: false
+  },
+  token: {
+    type: String,
+    default: ''
   }
 });
 
