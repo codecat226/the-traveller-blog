@@ -50,6 +50,13 @@ export const ResendVerify = () => {
           <div className="form__section">
             <button type="submit">Send Email</button>
           </div>
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Back to login page
+          </button>
           <br />
           {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
