@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import Modal from "../components/Modal";
 import { resetPassword } from "../services/userServices";
 import { ResetUser } from "../types/types";
 
 export const ResetPassword = () => {
   let { token } = useParams();
   const navigate = useNavigate();
-  const [modal, setModal] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -20,27 +19,20 @@ export const ResetPassword = () => {
     }),
     onSubmit: async (values: ResetUser, { resetForm }) => {
       try {
-        console.log(token);
-        const res = await resetPassword(values, token);
         // set the token into the store so it can be used in the rest of the project
-        setModal(res.message);
-        setModalOpen(true);
+        const res = await resetPassword(values, token);
+        toast.success(res.message);
         resetForm({});
         navigate("/login");
       } catch (error: any) {
-        console.log("error", error);
-        setModal(error.response.data.message);
-        setModalOpen(true);
+        toast.error(error.response.data.message);
       }
     },
   });
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="register">
+      <ToastContainer />
       <h1>Reset Password:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
@@ -58,7 +50,6 @@ export const ResetPassword = () => {
           <div className="form__section">
             <button type="submit">Reset Password</button>
           </div>
-          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

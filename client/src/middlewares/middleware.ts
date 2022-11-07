@@ -8,6 +8,6 @@ listenerMiddleware.startListening({
   effect: (action, listenerApi) =>
     localStorage.setItem(
       "loggedIn",
-      JSON.stringify((listenerApi.getState() as RootState).userR)
+      JSON.stringify((listenerApi.getState() as RootState).userR.isLoggedIn)
     ),
 });

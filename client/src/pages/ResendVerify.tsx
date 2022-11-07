@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { resendVerify } from "../services/userServices";
 import { VerifyUser } from "../types/types";
-import Modal from "../components/Modal";
 
 export const ResendVerify = () => {
   const navigate = useNavigate();
-  const [modal, setModal] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -20,23 +19,19 @@ export const ResendVerify = () => {
     onSubmit: async (values: VerifyUser, { resetForm }) => {
       try {
         const res = await resendVerify(values);
-        setModal(res.message);
-        setModalOpen(true);
+        toast.success(res.message);
+
         resetForm({});
         navigate("/login");
       } catch (error: any) {
-        setModal(error.response.data.message);
-        setModalOpen(true);
+        toast.error(error.response.data.message);
       }
     },
   });
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="register">
+      <ToastContainer />
       <h1>Resend Verification Email:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
@@ -50,7 +45,6 @@ export const ResendVerify = () => {
           <div className="form__section">
             <button type="submit">Send Email</button>
           </div>
-          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

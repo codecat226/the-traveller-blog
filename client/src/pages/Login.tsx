@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { setLoggedIn } from "../features/userSlice";
 import { loginUser } from "../services/userServices";
 import { UserLogin } from "../types/types";
-import Modal from "../components/Modal";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [modal, setModal] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,24 +26,18 @@ export const Login = () => {
         const res = await loginUser(values);
         // set the token into the store so it can be used in the rest of the project
         dispatch(setLoggedIn(true));
-        setModal(res.message);
-        setModalOpen(true);
+        toast.success(res.message);
         resetForm({});
         navigate("/profile");
       } catch (error: any) {
-        console.log("error", error);
-        setModal(error.response.data.message);
-        setModalOpen(true);
+        toast.error(error.response.data.message);
       }
     },
   });
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="register">
+      <ToastContainer />
       <h1>Login:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
@@ -85,7 +78,6 @@ export const Login = () => {
           >
             Resend verification email
           </button>
-          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

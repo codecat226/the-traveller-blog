@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { UserRegister } from "../types/types";
 import { registerUser } from "../services/userServices";
-import Modal from "../components/Modal";
 
 export const Register = () => {
-  const [modal, setModal] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -26,22 +25,16 @@ export const Register = () => {
     onSubmit: async (values: UserRegister, { resetForm }) => {
       try {
         const res = await registerUser(values);
-        setModal(res.message);
-        setModalOpen(true);
+        toast.success(res.message);
         resetForm({});
       } catch (error: any) {
-        setModal(error.response.data.message);
-        setModalOpen(true);
+        toast.error(error.response.data.message);
       }
     },
   });
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="register">
+      <ToastContainer />
       <h1>Register:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
@@ -80,7 +73,6 @@ export const Register = () => {
           <div className="form__section">
             <button type="submit">Register</button>
           </div>
-          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>

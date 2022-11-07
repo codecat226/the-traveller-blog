@@ -12,8 +12,7 @@ export const Logout = () => {
   let logoutErr = "";
   const sendReq = async () => {
     try {
-      const res = await logoutUser();
-      console.log("logout user res", res);
+      await logoutUser();
       // set the login state to false:
       dispatch(setLoggedIn(false));
       //redirect to home

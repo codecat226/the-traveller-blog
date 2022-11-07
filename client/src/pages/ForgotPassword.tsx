@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { forgotPassword } from "../services/userServices";
 import { ForgotUser } from "../types/types";
-import Modal from "../components/Modal";
 
 export const ForgotPassword = () => {
-  const [modal, setModal] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,23 +18,17 @@ export const ForgotPassword = () => {
       try {
         const res = await forgotPassword(values);
         // set the token into the store so it can be used in the rest of the project
-        setModal(res.message);
-        setModalOpen(true);
+        toast.success(res.message);
         resetForm({});
       } catch (error: any) {
-        console.log("error", error);
-        setModal(error.response.data.message);
-        setModalOpen(true);
+        toast.error(error.response.data.message);
       }
     },
   });
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
     <div className="register">
+      <ToastContainer />
       <h1>Forgot Password:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
@@ -49,7 +42,6 @@ export const ForgotPassword = () => {
           <div className="form__section">
             <button type="submit">Send reset-password email</button>
           </div>
-          {modalOpen && <Modal message={modal} closeModal={closeModal} />}
         </form>
       </div>
     </div>
