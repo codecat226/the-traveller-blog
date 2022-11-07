@@ -70,28 +70,30 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
     }
     if (foundUser.isVerified) {
       // clear previous cookies if exists
-      if (req.cookies[`${(foundUser as JwtPayload)._id}`]) {
-        req.cookies[`${(foundUser as JwtPayload)._id}`] = '';
+      if (req.cookies[`${(foundUser as UserDocument)._id}`]) {
+        req.cookies[`${(foundUser as UserDocument)._id}`] = '';
       }
 
       // if all goes well create jwt
       //create payload and import private key:
-      const payload: JwtPayload = { id: foundUser._id };
+      // const payload: JwtPayload = { id: foundUser._id };
       const privKey: Secret = dev.app.priv_key;
 
       // create the token
-      const token = jwt.sign(payload, String(privKey), {
+      const token = jwt.sign({ id: foundUser._id }, String(privKey), {
         expiresIn: '40s'
       });
 
-      // send the token inside cookie
+      // create cookie to send the token inside
       res.cookie(String(foundUser._id), token, {
-        //Cookies sent to clients can be set for a specific path, not just a domain.
+        // cookies sent to clients can be set for a specific path, if necessary
         path: '/',
+        // remember to make expiration LESS than the token expiration
         expires: new Date(Date.now() + 1000 * 38),
+        // Setting httpOnly prevents client-side scripts from accessing data
         httpOnly: true
       });
-      // console.log('user controller, login,', token);
+      //send the token to the frontend
       return res.status(200).send({ message: 'login success', token: token });
     } else {
       return errorRes(res, 400, 'Please verify email first');
@@ -196,8 +198,8 @@ export const createRefreshToken: RequestHandler = async (
       res.clearCookie(`${(decoded as TokenInterface).id}`);
 
       //generate the NEW token:
-      const payload: JwtPayload = { id: (decoded as TokenInterface).id };
-      const newToken = jwt.sign(payload, String(privKey), {
+      // const payload: JwtPayload = { id: (decoded as TokenInterface).id };
+      const newToken = jwt.sign({ id: (decoded as TokenInterface).id }, String(privKey), {
         expiresIn: '36s'
       });
 
@@ -210,7 +212,7 @@ export const createRefreshToken: RequestHandler = async (
         httpOnly: true
       });
       // set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request
-      (req as CustomRequest).id = (decoded as UserDocument).id;
+      (req as CustomRequest).id = (decoded as TokenInterface).id;
       // go next since it is middleware
       next();
     });
@@ -318,25 +320,6 @@ export const forgotPassword: RequestHandler = async (
     });
   }
 };
-
-// GET method /reset-password
-// export const getResetPassword: RequestHandler = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { token } = req.query;
-//     const userData = await User.findOne({ token: token }, { password: 0 });
-//     if (userData) {
-//       return successRes(res, 200, 'Reset password success', userData);
-//     }
-//   } catch (error) {
-//     res.status(500).send({
-//       message: 'server error'
-//     });
-//   }
-// };
 
 // POST method /reset-password
 export const resetPassword: RequestHandler = async (

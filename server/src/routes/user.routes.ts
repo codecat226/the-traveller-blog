@@ -27,7 +27,6 @@ router.get('/profile', isAuthorised, showProfile);
 router.get('/refresh', createRefreshToken, isAuthorised, showProfile);
 router.post('/logout', isAuthorised, logoutUser);
 router.post('/forgot-password', forgotPassword);
-// router.get('/reset-password', getResetPassword);
 router.post('/reset-password/:token', resetPassword);
 
 export default router;

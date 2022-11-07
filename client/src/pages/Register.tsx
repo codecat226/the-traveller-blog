@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { UserRegister } from "../types/types";
 import { registerUser } from "../services/userServices";
 import Modal from "../components/Modal";
 
 export const Register = () => {
-  const navigate = useNavigate();
   const [modal, setModal] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const formik = useFormik({
@@ -31,7 +29,6 @@ export const Register = () => {
         setModal(res.message);
         setModalOpen(true);
         resetForm({});
-        navigate("/login");
       } catch (error: any) {
         setModal(error.response.data.message);
         setModalOpen(true);
