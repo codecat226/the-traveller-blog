@@ -51,3 +51,7 @@ ISSUES:
   1. get email from form
   2. check if email with account exists, user is already verified?
   3. send verification email
+
+
+08/11/2022 Blog page
+

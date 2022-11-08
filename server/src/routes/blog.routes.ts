@@ -6,6 +6,7 @@ import {
   updateBlog,
   deleteBlogById
 } from '../controllers/blog.controller';
+import { isAuthorised } from '../middlewares/authorise';
 import { blogValidaton } from '../validators/validators';
 
 const router = express.Router();

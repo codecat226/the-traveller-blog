@@ -10,6 +10,7 @@ import {
   Contact,
   Profile,
   Logout,
+  Blogs,
 } from "../pages/Index";
 import { useAppSelector } from "../app/hooks";
 import { ForgotPassword } from "../pages/ForgotPassword";
@@ -48,6 +49,7 @@ const Index = () => {
               element={<ResetPassword />}
             ></Route>
           )}
+          {!isLoggedIn && <Route path="/blogs" element={<Blogs />}></Route>}
         </Routes>
       </main>
       <Footer />

@@ -24,14 +24,14 @@ export const Login = () => {
     onSubmit: async (values: UserLogin, { resetForm }) => {
       try {
         const res = await loginUser(values);
-        console.log("res", res);
-        // set the token into the store so it can be used in the rest of the project
         dispatch(setLoggedIn());
+        console.log(res);
         toast.success(res.message);
         resetForm({});
         navigate("/profile");
       } catch (error: any) {
         console.log(error);
+        // toast.error(error.response.data.message);
       }
     },
   });

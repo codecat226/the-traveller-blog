@@ -30,6 +30,11 @@ const Navbar = () => {
         </Link>
       )}
       {isLoggedIn && (
+        <Link to="/blogs" className="nav__link">
+          Blogs
+        </Link>
+      )}
+      {isLoggedIn && (
         <Link to="/logout" className="nav__link">
           Logout
         </Link>
