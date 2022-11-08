@@ -14,6 +14,11 @@ export const registerUser = async (values: UserRegister) => {
   return res.data;
 };
 
+export const verifyUser = async (token: string | undefined) => {
+  const res = await axios.post(`${baseUrl}verify/${token}`);
+  return res.data;
+};
+
 export const loginUser = async (values: UserLogin) => {
   const res = await axios.post(`${baseUrl}login`, values);
   return res.data;

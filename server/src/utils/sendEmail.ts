@@ -1,7 +1,13 @@
 import nodemailer from 'nodemailer';
 import { dev } from '../config/index';
 
-export const sendVerifyEmail = async (name: string, email: string, id: string, title: string) => {
+export type emailData = {
+  email: string;
+  subject: string;
+  html: string;
+};
+
+export const sendEmail = async (emailData: emailData) => {
   try {
     //create transporter
     let transporter = nodemailer.createTransport({
@@ -16,9 +22,9 @@ export const sendVerifyEmail = async (name: string, email: string, id: string, t
 
     const mailOptions = {
       from: dev.smtp.auth_email,
-      to: email, //list of receivers
-      subject: title,
-      html: `<p>Hi ${name}!\n<a href="http://localhost:3007/api/users/verify?id=${id}">\nPlease click on this link to verify your email address.</p>`
+      to: emailData.email, //list of receivers
+      subject: emailData.subject,
+      html: emailData.html
     };
 
     await transporter.sendMail(mailOptions, (error, info) => {

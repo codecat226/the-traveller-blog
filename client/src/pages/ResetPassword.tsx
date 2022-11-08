@@ -19,7 +19,6 @@ export const ResetPassword = () => {
     }),
     onSubmit: async (values: ResetUser, { resetForm }) => {
       try {
-        // set the token into the store so it can be used in the rest of the project
         const res = await resetPassword(values, token);
         toast.success(res.message);
         resetForm({});

@@ -6,10 +6,12 @@ Routes:
 
 - ADD VALIDATION MIDDLWARE (express-validator)
 
-/register (POST)
+/register (POST) EDITED 08.11.2022
 - get form input from req.body
-- hash password before storing in database
-- store all input as new User in database
+- hash password
+- creat JWT token and send email with it in url
+- create frontend page for url
+- frontend post req to verify --> go to /verify route
 
 /login (POST)
 - get form input from req.body
@@ -28,7 +30,6 @@ Routes:
 - destroy the cookie
 
 05/11/2022
- /verify
  - verify email on Register
  - reset password password
  - Make blog API
@@ -39,7 +40,7 @@ Routes:
   - check if the user exists
   - verify user and send 200 reset
 
-/resend-verify (POST)
+/resend-verify (POST) --NOT IN USE NOW
  - get email from req.body form (user)
  - check if user with email exists in database
  - resend the verification email

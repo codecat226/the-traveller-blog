@@ -7,9 +7,16 @@ import { errorRes, successRes } from '../helpers/resHelper';
 import User, { UserDocument } from '../models/User';
 import { dev } from '../config';
 import { CustomRequest, TokenInterface } from '../middlewares/authorise';
-import { sendVerifyEmail } from '../utils/sendVerificationEmail';
+import { sendEmail } from '../utils/sendEmail';
 import { createToken } from '../utils/createToken';
 import { sendPasswordEmail } from '../utils/sendResetPasswordEmail';
+
+export interface VerifyTokenInterface {
+  name: string;
+  email: string;
+  hashPW: string;
+  phone: string;
+}
 
 // registerUser (POST)
 export const registerUser: RequestHandler = async (req: Request, res: Response) => {
@@ -28,23 +35,22 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
     }
     // if correct format input provided then move on:
     const hashPW = await securePassword(password);
-    const newUser = new User({
-      id: v4(),
-      name: name,
-      email: email,
-      password: hashPW,
-      phone: phone,
-      isVerified: false,
-      isAdmin: false
+    //create jwt token, pass user input as payload in token
+    const privKey: Secret = dev.app.priv_key;
+    const token = jwt.sign({ name, email, hashPW, phone }, String(privKey), {
+      expiresIn: '15m'
     });
-    const userData = await newUser.save();
-    if (userData) {
-      const { name, email, id } = userData;
-      sendVerifyEmail(name, email, id, 'Verification Email');
-      return successRes(res, 201, 'new user created, please verify email');
-    } else {
-      return errorRes(res, 404, 'could not create user');
-    }
+
+    const emailData = {
+      email,
+      subject: 'Account verification',
+      html: `
+      <p>Hi ${name}!\n<a href="http://localhost:3000/activate-account/${token}">Please click on this link to verify your email address.</a></p>
+      `
+    };
+
+    sendEmail(emailData);
+    return successRes(res, 200, 'Please check your email address to verify your account.');
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
@@ -230,22 +236,38 @@ export const verifyUser: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const id = req.query.id;
-
-    const userUpdated = await User.updateOne(
-      { id: id },
-      {
-        $set: {
-          isVerified: true
+    const { token } = req.params;
+    if (token) {
+      const privKey: Secret = dev.app.priv_key;
+      jwt.verify(token, String(privKey), async (err: any, decoded: any) => {
+        if (err) {
+          return errorRes(res, 401, 'link has expired, please register again');
         }
-      }
-    );
-    if (userUpdated) {
-      return res
-        .status(200)
-        .json({ message: 'user verification successful, please close this tab and login again' });
-    } else {
-      return errorRes(res, 404, 'user verification unsuccessful');
+        console.log('decoded from verify user controller:', decoded);
+        const { name, email, hashPW, phone } = decoded as VerifyTokenInterface;
+        //check if user exists
+        const foundUser = await User.findOne({ email: email });
+
+        if (foundUser) {
+          return errorRes(res, 400, 'User with this email address already exists');
+        }
+        //set verify to true
+        const newUser = new User({
+          id: v4(),
+          name: name,
+          email: email,
+          password: hashPW,
+          phone: phone,
+          isVerified: true,
+          isAdmin: false
+        });
+
+        const userData = await newUser.save();
+        if (!userData) {
+          return errorRes(res, 400, 'User could not be created');
+        }
+        return successRes(res, 200, 'User successfully verified. Please log in.');
+      });
     }
   } catch (error) {
     res.status(500).send({
@@ -255,33 +277,43 @@ export const verifyUser: RequestHandler = async (
 };
 
 // POST method /resend-verify
-export const resendVerifyUser: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    //try to find user with id passed in url query
-    const { email } = req.body;
+// export const resendVerifyUser: RequestHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { email } = req.body;
 
-    const foundUser = await User.findOne({ email: email });
-    if (foundUser) {
-      if (foundUser.isVerified) {
-        return successRes(res, 200, 'User already verified.');
-      } else {
-        const { name, email, id } = foundUser;
-        sendVerifyEmail(name, email, id, 'Verification Email');
-        return successRes(res, 200, 'Verification link sent to your email address.');
-      }
-    } else {
-      return errorRes(res, 400, 'No user associated with this email address.');
-    }
-  } catch (error) {
-    res.status(500).send({
-      message: 'server error'
-    });
-  }
-};
+//     const foundUser = await User.findOne({ email: email });
+//     if (foundUser) {
+//       if (foundUser.isVerified) {
+//         return errorRes(res, 400, 'User already verified.');
+//       } else {
+//     //create jwt token, pass user input as payload in token
+//     const privKey: Secret = dev.app.priv_key;
+//     const token = jwt.sign({ email }, String(privKey), {
+//       expiresIn: '15m'
+//     });
+
+//     const emailData = {
+//       email,
+//       subject: 'Account verification',
+//       html: `
+//       <p>Hi ${foundUser.name}!\n<a href="http://localhost:3007/api/users/verify?token=${token}">Please click on this link to verify your email address.</a></p>
+//       `
+//     };
+//     sendEmail(emailData);
+//     return successRes(res, 200, 'Please check your email address to verify your account.');
+//     } else {
+//       return errorRes(res, 400, 'No user associated with this email address.');
+//     }
+//   } catch (error) {
+//     res.status(500).send({
+//       message: 'server error'
+//     });
+//   }
+// };
 
 // POST method /forgot-password
 export const forgotPassword: RequestHandler = async (

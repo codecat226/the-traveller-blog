@@ -10,11 +10,12 @@ import {
   Contact,
   Profile,
   Logout,
-  ResendVerify,
+  // ResendVerify,
 } from "../pages/Index";
 import { useAppSelector } from "../app/hooks";
 import { ForgotPassword } from "../pages/ForgotPassword";
 import { ResetPassword } from "../pages/ResetPassword";
+import { Activate } from "../pages/Activate";
 
 // Create routes for app
 const Index = () => {
@@ -28,10 +29,13 @@ const Index = () => {
           {!isLoggedIn && (
             <Route path="/register" element={<Register />}></Route>
           )}
-          {!isLoggedIn && <Route path="/login" element={<Login />}></Route>}
           {!isLoggedIn && (
-            <Route path="/resend-verify" element={<ResendVerify />}></Route>
+            <Route
+              path="/activate-account/:token"
+              element={<Activate />}
+            ></Route>
           )}
+          {!isLoggedIn && <Route path="/login" element={<Login />}></Route>}
           <Route path="/contact" element={<Contact />}></Route>
           {isLoggedIn && <Route path="/profile" element={<Profile />}></Route>}
           {isLoggedIn && <Route path="/logout" element={<Logout />}></Route>}
