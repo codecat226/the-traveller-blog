@@ -11,13 +11,3 @@ listenerMiddleware.startListening({
       JSON.stringify((listenerApi.getState() as RootState).userR.isLoggedIn)
     ),
 });
-
-// export const listenerMiddleware = createListenerMiddleware();
-// listenerMiddleware.startListening({
-//   matcher: isAnyOf(increment, decrement),
-//   effect: (action, listenerApi) =>
-//     localStorage.setItem(
-//       "count",
-//       JSON.stringify((listenerApi.getState() as RootState).counter)
-//     ),
-// });

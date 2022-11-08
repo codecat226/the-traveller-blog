@@ -49,7 +49,7 @@ const Index = () => {
               element={<ResetPassword />}
             ></Route>
           )}
-          {!isLoggedIn && <Route path="/blogs" element={<Blogs />}></Route>}
+          {isLoggedIn && <Route path="/blogs" element={<Blogs />}></Route>}
         </Routes>
       </main>
       <Footer />

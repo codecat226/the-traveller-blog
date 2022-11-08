@@ -55,3 +55,14 @@ ISSUES:
 
 08/11/2022 Blog page
 
+// Blogs page (user and admin)
+// create blogSlice
+// create initialState type for Blog
+// Get all blogs /api/blogs
+// Add search bar (later)
+
+// Admin has a dashboard -->
+// Create blog
+// Edit blog
+// Update blog
+// Delete Blog

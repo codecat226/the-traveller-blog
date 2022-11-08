@@ -1,7 +1,19 @@
 export type InitialStateUser = {
   isLoggedIn: boolean;
-  // firstRender: boolean;
   user: { name: string; email: string; phone: string };
+};
+
+export type InitialStateBlog = {
+  error: string;
+  loading: boolean;
+  blogs: Blog[];
+};
+
+export type Blog = {
+  title: string;
+  author: string;
+  publishDate: string;
+  body: string;
 };
 
 export type UserProfile = {
