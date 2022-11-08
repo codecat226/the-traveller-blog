@@ -34,11 +34,14 @@ Routes:
  - reset password password
  - Make blog API
  
-/verify (GET)
+/verify (POST)
   - create verify route in routes
-  - get query id from email link clicked by user
-  - check if the user exists
-  - verify user and send 200 reset
+  - get token from body 
+  - verify the JWT token 
+  - get all the user data from token
+  - save new user in DB
+  - check if the new user was saved
+  - verify user and send 200 res
 
 /resend-verify (POST) --NOT IN USE NOW
  - get email from req.body form (user)
@@ -56,3 +59,35 @@ Routes:
  - get new password from body
  - update to new password (set in mongodb)
  
+
+08.11.2022
+
+create new router for blog
+create Model for blog
+
+/api/blogs:
+
+/ (GET)
+ - return all blogs 
+ - Who: user and admin
+ - LoggedIn
+
+/:id (GET)
+ - return a single blog by id
+  - Who: user and admin
+ - LoggedIn
+
+/ (POST)
+ - create a new blog
+  - Who: admin
+  - LoggedIn
+
+/:id (POST/PUT)
+ - update a blog by id
+ - Who: admin
+ - LoggedIn
+
+/:id (DELETE/POST)
+ - delete a blog by id
+   - Who: admin
+   - LoggedIn

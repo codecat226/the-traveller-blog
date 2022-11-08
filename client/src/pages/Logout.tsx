@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
-import { setLoggedIn } from "../features/userSlice";
+import { setLoggedOut } from "../features/userSlice";
 import { logoutUser } from "../services/userServices";
 axios.defaults.withCredentials = true;
 
@@ -14,7 +14,7 @@ export const Logout = () => {
     try {
       await logoutUser();
       // set the login state to false:
-      dispatch(setLoggedIn(false));
+      dispatch(setLoggedOut());
       //redirect to home
       navigate("/");
     } catch (error: any) {

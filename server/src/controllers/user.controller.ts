@@ -111,6 +111,53 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
   }
 };
 
+// POST method /verify
+export const verifyUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { token } = req.params;
+    if (token) {
+      const privKey: Secret = dev.app.priv_key;
+      jwt.verify(token, String(privKey), async (err: any, decoded: any) => {
+        if (err) {
+          return errorRes(res, 401, 'link has expired, please register again');
+        }
+        console.log('decoded from verify user controller:', decoded);
+        const { name, email, hashPW, phone } = decoded as VerifyTokenInterface;
+        //check if user exists
+        const foundUser = await User.findOne({ email: email });
+
+        if (foundUser) {
+          return errorRes(res, 400, 'User with this email address already exists');
+        }
+        //set verify to true
+        const newUser = new User({
+          id: v4(),
+          name: name,
+          email: email,
+          password: hashPW,
+          phone: phone,
+          isVerified: true,
+          isAdmin: false
+        });
+
+        const userData = await newUser.save();
+        if (!userData) {
+          return errorRes(res, 400, 'User could not be created');
+        }
+        return successRes(res, 200, 'User successfully verified. Please log in.');
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: 'server error'
+    });
+  }
+};
+
 // /profile (GET)
 export const showProfile: RequestHandler = async (req: Request, res: Response) => {
   try {
@@ -119,10 +166,11 @@ export const showProfile: RequestHandler = async (req: Request, res: Response) =
     if (!foundUser) {
       return errorRes(res, 404, 'User does not exist');
     }
-    res.status(200).json({
-      message: 'user found',
-      foundUser
-    });
+    successRes(res, 200, 'user found', foundUser);
+    // res.status(200).json({
+    //   message: 'user found',
+    //   foundUser
+    // });
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
@@ -198,7 +246,7 @@ export const createRefreshToken: RequestHandler = async (
           message: 'Could not verify token'
         });
       }
-      console.log('old token :', oldToken);
+      // console.log('old token :', oldToken);
       //if the token IS verified --> reset OLD cookies in res and req header
       req.cookies[`${(decoded as TokenInterface).id}`] = '';
       res.clearCookie(`${(decoded as TokenInterface).id}`);
@@ -209,7 +257,7 @@ export const createRefreshToken: RequestHandler = async (
         expiresIn: '36s'
       });
 
-      console.log('new token:', newToken);
+      // console.log('new token:', newToken);
       // send the NEW token inside cookie
       res.cookie(String((decoded as TokenInterface).id), newToken, {
         //Cookies sent to clients can be set for a specific path, not just a domain.
@@ -225,53 +273,6 @@ export const createRefreshToken: RequestHandler = async (
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
-    });
-  }
-};
-
-// GET method /verify
-export const verifyUser: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { token } = req.params;
-    if (token) {
-      const privKey: Secret = dev.app.priv_key;
-      jwt.verify(token, String(privKey), async (err: any, decoded: any) => {
-        if (err) {
-          return errorRes(res, 401, 'link has expired, please register again');
-        }
-        console.log('decoded from verify user controller:', decoded);
-        const { name, email, hashPW, phone } = decoded as VerifyTokenInterface;
-        //check if user exists
-        const foundUser = await User.findOne({ email: email });
-
-        if (foundUser) {
-          return errorRes(res, 400, 'User with this email address already exists');
-        }
-        //set verify to true
-        const newUser = new User({
-          id: v4(),
-          name: name,
-          email: email,
-          password: hashPW,
-          phone: phone,
-          isVerified: true,
-          isAdmin: false
-        });
-
-        const userData = await newUser.save();
-        if (!userData) {
-          return errorRes(res, 400, 'User could not be created');
-        }
-        return successRes(res, 200, 'User successfully verified. Please log in.');
-      });
-    }
-  } catch (error) {
-    res.status(500).send({
-      message: 'server error'
     });
   }
 };

@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { isAuthorised } from '../middlewares/authorise';
-import { registerUserValidaton } from '../validators/userValidation';
+import { registerUserValidaton, loginUserValidaton } from '../validators/validators';
 import {
   registerUser,
   loginUser,
@@ -9,7 +9,6 @@ import {
   logoutUser,
   createRefreshToken,
   verifyUser,
-  // resendVerifyUser,
   forgotPassword,
   resetPassword
 } from '../controllers/user.controller';
@@ -20,8 +19,7 @@ const router = express.Router();
 
 router.post('/register', registerUserValidaton, registerUser);
 router.post('/verify/:token', verifyUser);
-// router.post('/resend-verify', resendVerifyUser);
-router.post('/login', loginUser);
+router.post('/login', loginUserValidaton, loginUser);
 //when showing profile, we need to check if authorised through the cookie we sent in loginUser
 router.get('/profile', isAuthorised, showProfile);
 router.get('/refresh', createRefreshToken, isAuthorised, showProfile);

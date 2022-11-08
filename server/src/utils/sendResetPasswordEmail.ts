@@ -25,7 +25,6 @@ export const sendPasswordEmail = async (
       from: dev.smtp.auth_email,
       to: email, //list of receivers
       subject: title,
-      //CHECK this url string if correct syntax
       html: `<p>Hi ${name}!\n<a href="http://localhost:3000/reset-password/${token}">\nPlease click on this link to reset password.</p>`
     };
 

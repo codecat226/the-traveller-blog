@@ -24,13 +24,14 @@ export const Login = () => {
     onSubmit: async (values: UserLogin, { resetForm }) => {
       try {
         const res = await loginUser(values);
+        console.log("res", res);
         // set the token into the store so it can be used in the rest of the project
-        dispatch(setLoggedIn(true));
+        dispatch(setLoggedIn());
         toast.success(res.message);
         resetForm({});
         navigate("/profile");
       } catch (error: any) {
-        toast.error(error.response.data.message);
+        console.log(error);
       }
     },
   });
@@ -69,14 +70,6 @@ export const Login = () => {
             }}
           >
             Forgot Password?
-          </button>
-          <button
-            className="verificationBtn"
-            onClick={() => {
-              navigate("/resend-verify");
-            }}
-          >
-            Resend verification email
           </button>
         </form>
       </div>

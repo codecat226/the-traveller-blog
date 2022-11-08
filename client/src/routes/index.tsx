@@ -10,7 +10,6 @@ import {
   Contact,
   Profile,
   Logout,
-  // ResendVerify,
 } from "../pages/Index";
 import { useAppSelector } from "../app/hooks";
 import { ForgotPassword } from "../pages/ForgotPassword";
