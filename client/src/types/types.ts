@@ -12,10 +12,21 @@ export type InitialStateBlog = {
 };
 
 export type Blog = {
+  id: string;
   title: string;
   author: string;
   publishDate: string;
   body: string;
+};
+
+export type BlogProps = {
+  blog: {
+    id: string;
+    title: string;
+    author: string;
+    publishDate: string;
+    body: string;
+  };
 };
 
 export type UserProfile = {

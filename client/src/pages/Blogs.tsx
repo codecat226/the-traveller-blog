@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import Blog from "../components/Blog";
 import { fetchBlogs } from "../features/blogSlice";
 import { setUser } from "../features/userSlice";
 import { refreshToken } from "../services/userServices";
@@ -35,12 +36,14 @@ export const Blogs = () => {
   }, [dispatch, handleRefresh, isLoggedIn]);
 
   return (
-    <main>
+    <main className="blog">
       {loading && <p>Loading...</p>}
       {error && <p>Error</p>}
-      {blogs.map((blog) => {
-        return <p>{blog.author}</p>;
-      })}
+      <section className="blogContainer">
+        {blogs.map((blog) => {
+          return <Blog key={blog.id} blog={blog} />;
+        })}
+      </section>
     </main>
   );
 };

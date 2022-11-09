@@ -43,14 +43,8 @@ ISSUES:
 
 05/11/2022
  - verify email on Register
- - reset password password
+ - reset password 
  - Make blog API
- 
- re/verify user
- - add isVerified to schema
-  1. get email from form
-  2. check if email with account exists, user is already verified?
-  3. send verification email
 
 
 08/11/2022 Blog page
@@ -68,5 +62,15 @@ ISSUES:
 // Update blog
 // Delete Blog
 
-//Create single <Blog/> component so all blogs can be mapped.
+09/11/2022 
+
+Refresh token bug: (FIXED)
+// Make sure it calls the profile route on first render --> then refresh route subesquently
+// Put all profile fetch logic in the user slice.
+// get rid of useState.
+
+Blog page
+// Create single <Blog/> component so all blogs can be mapped.
+// Style blog page 
+
 
