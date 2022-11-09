@@ -15,7 +15,6 @@ export const Contact = () => {
   const handleRefresh = useCallback(async () => {
     try {
       const res = await refreshToken();
-      console.log("res from handleRefresh", res);
       dispatch(setUser(res.foundUser));
     } catch (error) {
       console.log(error);
@@ -26,7 +25,7 @@ export const Contact = () => {
     if (isLoggedIn) {
       const interval = setInterval(() => {
         handleRefresh();
-      }, 1000 * 10);
+      }, 1000 * 20);
       return () => clearInterval(interval);
     }
   }, [dispatch, handleRefresh, isLoggedIn]);

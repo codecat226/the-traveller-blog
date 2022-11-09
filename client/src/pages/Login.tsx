@@ -25,7 +25,6 @@ export const Login = () => {
       try {
         const res = await loginUser(values);
         dispatch(setLoggedIn());
-        console.log(res);
         toast.success(res.message);
         resetForm({});
         navigate("/profile");

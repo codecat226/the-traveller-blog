@@ -57,6 +57,7 @@ ISSUES:
 
 // Blogs page (user and admin)
 // create blogSlice
+// use createAsyncThunk to GET all blogs from blogs api
 // create initialState type for Blog
 // Get all blogs /api/blogs
 // Add search bar (later)
@@ -66,3 +67,6 @@ ISSUES:
 // Edit blog
 // Update blog
 // Delete Blog
+
+//Create single <Blog/> component so all blogs can be mapped.
+

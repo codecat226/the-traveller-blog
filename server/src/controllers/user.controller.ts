@@ -62,10 +62,6 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
 export const loginUser: RequestHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return errorRes(res, 400, 'must provide email and password');
-    }
-    // if correct format input provided then move on:
     const foundUser = await User.findOne({ email: email });
     if (!foundUser) {
       return errorRes(res, 404, 'User with this email does not exist');
@@ -87,7 +83,7 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
 
       // create the token
       const token = jwt.sign({ id: foundUser._id }, String(privKey), {
-        expiresIn: '40s'
+        expiresIn: '3m'
       });
 
       // create cookie to send the token inside
@@ -95,7 +91,7 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
         // cookies sent to clients can be set for a specific path, if necessary
         path: '/',
         // remember to make expiration LESS than the token expiration
-        expires: new Date(Date.now() + 1000 * 38),
+        expires: new Date(Date.now() + 1000 * 170),
         // Setting httpOnly prevents client-side scripts from accessing data
         httpOnly: true
       });
@@ -254,7 +250,7 @@ export const createRefreshToken: RequestHandler = async (
       //generate the NEW token:
       // const payload: JwtPayload = { id: (decoded as TokenInterface).id };
       const newToken = jwt.sign({ id: (decoded as TokenInterface).id }, String(privKey), {
-        expiresIn: '36s'
+        expiresIn: '2m'
       });
 
       // console.log('new token:', newToken);
@@ -262,7 +258,7 @@ export const createRefreshToken: RequestHandler = async (
       res.cookie(String((decoded as TokenInterface).id), newToken, {
         //Cookies sent to clients can be set for a specific path, not just a domain.
         path: '/',
-        expires: new Date(Date.now() + 1000 * 34),
+        expires: new Date(Date.now() + 1000 * 100),
         httpOnly: true
       });
       // set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request

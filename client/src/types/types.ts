@@ -1,4 +1,6 @@
 export type InitialStateUser = {
+  error: string;
+  loading: boolean;
   isLoggedIn: boolean;
   user: { name: string; email: string; phone: string };
 };
