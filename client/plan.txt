@@ -73,4 +73,6 @@ Blog page
 // Create single <Blog/> component so all blogs can be mapped.
 // Style blog page 
 
+Fix the login function to a onClick event.
+
 

@@ -35,7 +35,7 @@ export const logoutUser = async () => {
   const res = await axios.post(`${baseUrl}logout`, null, {
     withCredentials: true,
   });
-  return res.data;
+  return res;
 };
 
 export const refreshToken = async () => {
