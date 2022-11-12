@@ -40,7 +40,9 @@ export const ForgotPassword = () => {
             ) : null}
           </div>
           <div className="form__section">
-            <button type="submit">Send reset-password email</button>
+            <button type="submit" className="verificationBtn">
+              Send reset-password email
+            </button>
           </div>
         </form>
       </div>

@@ -1,50 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant:wght@300;400&family=DM+Serif+Display&display=swap");
+
+html,
 body {
+  scroll-behavior: smooth;
+  text-decoration: none;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: black;
+  padding: 0;
+  color: var(--descriptionColor);
 }
 
 :root {
-  --blue: rgb(14, 14, 81);
+  --layoutColor: rgba(40, 83, 69);
+  --headingFont: "Abril Fatface", cursive;
+  --secondaryFont: "DM Serif Display", serif;
+  --tertiaryFont: "Cormorant", serif;
+  --descriptionColor: rgb(199, 190, 181);
+}
+
+/* HOME PAGE */
+
+main.home {
+  height: 90vh;
+  background-image: url("../public/travel-bg-dark.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-family: var(--headingFont);
+}
+
+.home__header {
+  color: var(--descriptionColor);
+  font-size: 4rem;
+  padding: 2rem;
 }
 
 /* NAVBAR, FOOTER */
+nav {
+  font-family: var(--secondaryFont);
+}
 
 .nav {
   display: flex;
-  flex-direction: row;
-  gap: 3rem;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--blue);
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--layoutColor);
+  font-size: 1rem;
+  padding: 1rem;
 }
 
 .nav__link {
   text-decoration: none;
-  color: white;
-  padding: 2rem;
+  color: var(--descriptionColor);
+  position: relative;
 }
 
 .nav__link:hover {
   text-decoration: underline;
 }
 
-.home {
-  width: 100%;
-  text-align: center;
-  color: black;
+.copyright {
+  font-size: 1rem;
 }
 
 footer {
-  color: white;
-  position: fixed;
+  color: var(--descriptionColor);
   left: 0;
   bottom: 0;
+  position: fixed;
   width: 100%;
+  font-family: var(--tertiaryFont);
 }
 
 /* REGISTER PAGE*/
@@ -54,23 +81,30 @@ footer {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 3rem 0rem;
+  background-color: rgb(78, 73, 68);
 }
 
 h1 {
-  color: black;
+  color: var(--secondaryFont);
+  font-family: var(--headingFont);
   font-size: 2rem;
   font-weight: 300;
 }
 
 .card {
   margin-bottom: 5rem;
+  font-family: var(--tertiaryFont);
+  color: var(--descriptionColor);
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.formikErrMsg {
+  font-size: 0.7rem;
 }
 
 .form__section label {
@@ -83,17 +117,26 @@ form {
 .verificationBtn {
   margin: 1rem;
   background-color: aliceblue;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   border-radius: 5px;
-  border: 0.2px solid black;
+  border: 0.2px solid var(--descriptionColor);
   transition: ease-in 0.1s;
+  font-family: var(--secondaryFont);
+  font-size: 1.3rem;
+}
+
+.buttonSection {
+  margin-top: 4rem;
+  text-align: center;
 }
 
 .secondaryBtn {
-  margin: 0.4rem;
-  margin-bottom: 3rem;
+  margin: 0rem 1rem 0rem 1rem;
   border: none;
-  background-color: white;
+  color: var(--descriptionColor);
+  background-color: transparent;
+  font-family: var(--tertiaryFont);
+  font-size: 1.2rem;
 }
 
 .secondaryBtn:hover {
@@ -103,9 +146,9 @@ form {
 }
 
 .verificationBtn:hover {
-  background-color: var(--blue);
+  background-color: var(--layoutColor);
   cursor: pointer;
-  color: white;
+  color: var(--descriptionColor);
 }
 
 div.form__section {
@@ -114,8 +157,13 @@ div.form__section {
 
 .form__section input {
   border: none;
-  border-bottom: solid black 1px;
-  width: 12rem;
+  color: var(--descriptionColor);
+  border-bottom: solid var(--descriptionColor) 1px;
+  width: 10rem;
+  height: 1.5rem;
+  font-family: var(--tertiaryFont);
+  font-size: 1.5rem;
+  background: transparent;
 }
 
 /* EDIT BLOG PAGE */
@@ -143,4 +191,115 @@ div.form__section {
 
 .blogContainer__item {
   padding: 1rem 1rem 3rem 1rem;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media only screen and (min-width: 600) {
+  .home__header {
+    font-size: 6rem;
+    padding: 0rem;
+  }
+  .nav__link {
+    padding: 0.3rem;
+  }
+  .nav__link:hover {
+    text-decoration: none;
+  }
+  .nav {
+    font-size: 1rem;
+    padding: 0rem;
+  }
+  .nav__link::before {
+    font-size: 0.4rem;
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 0.2rem;
+    bottom: 0;
+    left: 0;
+    background-color: var(--descriptionColor);
+    transform: scaleX(0);
+    transition: transform 0.2s ease-in;
+  }
+
+  nav a:hover::before {
+    transform: scaleX(0.8);
+  }
+  .form {
+    margin: 0rem;
+    background-image: url("../public/map-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .card {
+    font-size: 1.5rem;
+  }
+  .form__section input {
+    width: 17rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .home__header {
+    font-size: 10rem;
+    padding: 0rem;
+  }
+  .nav {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 0.8rem;
+  }
+  .nav__link:hover {
+    text-decoration: none;
+  }
+  .nav__link {
+    padding: 0.5rem 1rem;
+  }
+  .nav__link::before {
+    font-size: 0.4rem;
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 0.2rem;
+    bottom: 0;
+    left: 0;
+    background-color: var(--descriptionColor);
+    transform: scaleX(0);
+    transition: transform 0.2s ease-in;
+  }
+
+  nav a:hover::before {
+    transform: scaleX(0.9);
+  }
+
+  footer.nav {
+    padding: 0rem;
+  }
+
+  .form {
+    background-image: url("../public/map-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0rem;
+    height: 90vh;
+  }
+
+  .card {
+    font-size: 1.5rem;
+  }
+
+  .formikErrMsg {
+    font-size: 1rem;
+  }
+
+  .form__section input {
+    width: 20rem;
+  }
 }

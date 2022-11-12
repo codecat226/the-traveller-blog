@@ -66,22 +66,24 @@ export const AdminLogin = () => {
             </button>
           </div>
         </form>
-        <button
-          className="secondaryBtn"
-          onClick={() => {
-            navigate("/forgot-password");
-          }}
-        >
-          Forgot Password?
-        </button>
-        <button
-          className="secondaryBtn"
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Back to user login
-        </button>
+        <div className="buttonSection">
+          <button
+            className="secondaryBtn"
+            onClick={() => {
+              navigate("/forgot-password");
+            }}
+          >
+            Forgot Password?
+          </button>
+          <button
+            className="secondaryBtn"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Back to user login
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -42,14 +42,14 @@ export const Register = () => {
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" {...formik.getFieldProps("name")} />
             {formik.touched.name && formik.errors.name ? (
-              <div>{formik.errors.name}</div>
+              <div className="formikErrMsg">{formik.errors.name}</div>
             ) : null}
           </div>
           <div className="form__section">
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" {...formik.getFieldProps("email")} />
             {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
+              <div className="formikErrMsg">{formik.errors.email}</div>
             ) : null}
           </div>
           <div className="form__section">
@@ -60,14 +60,14 @@ export const Register = () => {
               {...formik.getFieldProps("password")}
             />
             {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
+              <div className="formikErrMsg">{formik.errors.password}</div>
             ) : null}
           </div>
           <div className="form__section">
             <label htmlFor="phone">Phone:</label>
             <input type="text" id="phone" {...formik.getFieldProps("phone")} />
             {formik.touched.phone && formik.errors.phone ? (
-              <div>{formik.errors.phone}</div>
+              <div className="formikErrMsg">{formik.errors.phone}</div>
             ) : null}
           </div>
           <div className="form__section">

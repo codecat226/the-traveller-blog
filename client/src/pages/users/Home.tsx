@@ -1,5 +1,9 @@
 import React from "react";
 
 export const Home = () => {
-  return <section className="home">Home</section>;
+  return (
+    <main className="home">
+      <h1 className="home__header">The Traveller</h1>
+    </main>
+  );
 };

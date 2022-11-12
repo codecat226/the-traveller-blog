@@ -45,7 +45,7 @@ export const Login = () => {
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" {...formik.getFieldProps("email")} />
             {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
+              <div className="formikErrMsg">{formik.errors.email}</div>
             ) : null}
           </div>
           <div className="form__section">
@@ -56,7 +56,7 @@ export const Login = () => {
               {...formik.getFieldProps("password")}
             />
             {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
+              <div className="formikErrMsg">{formik.errors.password}</div>
             ) : null}
           </div>
           <div className="form__section">
@@ -65,22 +65,24 @@ export const Login = () => {
             </button>
           </div>
         </form>
-        <button
-          className="secondaryBtn"
-          onClick={() => {
-            navigate("/forgot-password");
-          }}
-        >
-          Forgot password?
-        </button>
-        <button
-          className="secondaryBtn"
-          onClick={() => {
-            navigate("/admin-login");
-          }}
-        >
-          Are you an admin?
-        </button>
+        <div className="buttonSection">
+          <button
+            className="secondaryBtn"
+            onClick={() => {
+              navigate("/forgot-password");
+            }}
+          >
+            Forgot password?
+          </button>
+          <button
+            className="secondaryBtn"
+            onClick={() => {
+              navigate("/admin-login");
+            }}
+          >
+            Are you an admin?
+          </button>
+        </div>
       </div>
     </div>
   );

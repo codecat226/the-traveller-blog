@@ -30,5 +30,9 @@ export const Contact = () => {
     }
   }, [dispatch, handleRefresh, isLoggedIn]);
 
-  return <div className="contactPage">Contact</div>;
+  return (
+    <main className="form">
+      <div>contact</div>
+    </main>
+  );
 };

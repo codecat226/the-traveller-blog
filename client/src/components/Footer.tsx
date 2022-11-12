@@ -1,14 +1,9 @@
 import React from "react";
-import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="nav">
-      <p>
-        Made with &nbsp;
-        <FaHeart />
-        &nbsp; by Rikako Nishimura
-      </p>
+      <p className="copyright">Copyright &copy; 2022 Rika Nishimura</p>
     </footer>
   );
 };
