@@ -6,6 +6,7 @@ const initialState: InitialStateUser = {
   error: "",
   loading: true,
   isLoggedIn: false,
+  isAdmin: false,
   user: { name: "", email: "", phone: "" },
 };
 
@@ -25,6 +26,12 @@ const userSlice = createSlice({
     },
     setLoggedOut: (state) => {
       state.isLoggedIn = false;
+    },
+    setAdmin: (state) => {
+      state.isAdmin = true;
+    },
+    removeAdmin: (state) => {
+      state.isAdmin = false;
     },
     setUser: (state, action: PayloadAction<UserProfile>) => {
       state.user = action.payload;
@@ -51,5 +58,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setLoggedIn, setUser, setLoggedOut } = userSlice.actions;
+export const { setLoggedIn, setUser, setLoggedOut, setAdmin, removeAdmin } =
+  userSlice.actions;
 export default userSlice.reducer;

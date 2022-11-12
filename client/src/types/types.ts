@@ -2,6 +2,7 @@ export type InitialStateUser = {
   error: string;
   loading: boolean;
   isLoggedIn: boolean;
+  isAdmin: boolean;
   user: { name: string; email: string; phone: string };
 };
 
@@ -13,6 +14,13 @@ export type InitialStateBlog = {
 
 export type Blog = {
   id: string;
+  title: string;
+  author: string;
+  publishDate: string;
+  body: string;
+};
+
+export type NewBlog = {
   title: string;
   author: string;
   publishDate: string;

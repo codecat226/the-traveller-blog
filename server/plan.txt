@@ -91,3 +91,22 @@ create Model for blog
  - delete a blog by id
    - Who: admin
    - LoggedIn
+
+
+11.11.2022
+
+/api/admin
+
+(register is same as user route)
+
+/login (POST) loginAdmin
+- get form input from req.body
+- no need to check if email verified for admin 
+- check if user with email exists
+- compare raw password with hashed in database
+- if matches, redirect user to home page
+
+/dashboard (GET) showDashboard
+- check if the user isAdmin === true, if not --> send err res (deny access)
+(In frontend set the localstorage isLoggedIn === true AND isAdmin === true)
+

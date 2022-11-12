@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/userSlice";
 import blogReducer from "../features/blogSlice";
-import { listenerMiddleware } from "../middlewares/middleware";
+import {
+  listenerMiddleware,
+  listenerMiddlewareTwo,
+} from "../middlewares/middleware";
 
 const userState = JSON.parse(localStorage.getItem("loggedIn") || "null");
 
@@ -14,7 +17,9 @@ export const store = configureStore({
     blogR: blogReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware()
+      .prepend(listenerMiddleware.middleware)
+      .prepend(listenerMiddlewareTwo.middleware),
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

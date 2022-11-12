@@ -1,21 +1,31 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setLoggedIn, setLoggedOut } from "../features/userSlice";
+import {
+  removeAdmin,
+  setAdmin,
+  setLoggedIn,
+  setLoggedOut,
+} from "../features/userSlice";
 import { logoutUser } from "../services/userServices";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // const { isLoggedIn } = useAppSelector((state) => state.userR);
-  const { isLoggedIn } = useAppSelector((state) => state.userR);
-  console.log(isLoggedIn);
+  const { isLoggedIn, isAdmin } = useAppSelector((state) => state.userR);
   useEffect(() => {
     let loginState = JSON.parse(localStorage.getItem("isLoggedIn")!);
+    let adminState = JSON.parse(localStorage.getItem("isAdmin")!);
     if (loginState === true) {
       dispatch(setLoggedIn());
     } else if (loginState === false) {
       dispatch(setLoggedOut());
+    }
+    if (adminState === true) {
+      dispatch(setAdmin());
+    } else if (adminState === false) {
+      dispatch(removeAdmin());
     }
   }, [dispatch]);
 
@@ -24,7 +34,7 @@ const Navbar = () => {
       const res = await logoutUser();
       if (res.status === 200) {
         dispatch(setLoggedOut());
-        navigate("/");
+        navigate("/login");
         localStorage.clear();
       }
     } catch (error: any) {
@@ -48,15 +58,27 @@ const Navbar = () => {
           Login
         </Link>
       )}
-      <Link to="/contact" className="nav__link">
-        Contact
-      </Link>
-      {isLoggedIn && (
+      {!isAdmin && (
+        <Link to="/contact" className="nav__link">
+          Contact
+        </Link>
+      )}
+      {isLoggedIn && !isAdmin && (
         <Link to="/profile" className="nav__link">
           Profile
         </Link>
       )}
-      {isLoggedIn && (
+      {isLoggedIn && isAdmin && (
+        <Link to="/admin-profile" className="nav__link">
+          Profile
+        </Link>
+      )}
+      {isLoggedIn && isAdmin && (
+        <Link to="/dashboard" className="nav__link">
+          Dashboard
+        </Link>
+      )}
+      {isLoggedIn && !isAdmin && (
         <Link to="/blogs" className="nav__link">
           Blogs
         </Link>

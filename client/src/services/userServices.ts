@@ -24,6 +24,11 @@ export const loginUser = async (values: UserLogin) => {
   return res.data;
 };
 
+export const loginAdmin = async (values: UserLogin) => {
+  const res = await axios.post(`${baseUrl}login`, values);
+  return res.data;
+};
+
 export const userProfile = async () => {
   const res = await axios.get(`${baseUrl}profile`, {
     withCredentials: true,
@@ -38,7 +43,7 @@ export const logoutUser = async () => {
   return res;
 };
 
-export const refreshToken = async () => {
+export const refreshUser = async () => {
   const res = await axios.get(`${baseUrl}refresh`, {
     withCredentials: true,
   });

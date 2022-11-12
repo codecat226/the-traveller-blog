@@ -73,6 +73,36 @@ Blog page
 // Create single <Blog/> component so all blogs can be mapped.
 // Style blog page 
 
-Fix the login function to a onClick event.
+Fix the logout function to a onClick event. (FIXED)
+
+12/11/2022 
+
+Admin:
+// Create another field in user state (isAdmin)
+// update types and localstorage middleware
+// add link to user login page to direct to admin login
+// create admin login page
+// after admin login, direct to admin dashboard (blogs page)
+
+EDIT BLOG
+// Create a edit link for every Blog
+// Create a type for Blog (add to types)
+// Onclick, pass id of specific blog in url for edit
+// create post request for edit blog in blog services
+
+CREATE BLOG
+//Create a add blog link at top of dashboard
+// create add blog page
+// onClick, navigate to new blog form page
+// post route for add blog
+// on sucess --> redirect to dashboard
+
+DELETE BLOG
+// Create a DELETE link for every Blog
+// Onclick, pass id of specific blog in url for delete
+// create post request for delete blog in blog services
+// on sucess --> redirect to dashboard
+
+
 
 

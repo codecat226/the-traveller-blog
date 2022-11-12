@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import userRouter from './routes/user.routes';
 import blogRouter from './routes/blog.routes';
+import adminRouter from './routes/admin.routes';
 
 import { dev } from './config';
 import { connectDB } from './config/db';
@@ -28,6 +29,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use('/api/users', userRouter);
+app.use('/api/admin', adminRouter);
 app.use('/api/blogs', blogRouter);
 
 app.listen(PORT, async () => {

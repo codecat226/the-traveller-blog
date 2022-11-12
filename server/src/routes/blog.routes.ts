@@ -12,10 +12,10 @@ import { blogValidaton } from '../validators/validators';
 const router = express.Router();
 
 // all routes start with /api/blogs
-router.get('/', getAllBlogs);
+router.get('/', isAuthorised, getAllBlogs);
 router.get('/:id', getBlogById);
 router.post('/create', blogValidaton, createBlog);
-router.put('/:id', updateBlog);
+router.post('/:id', updateBlog);
 router.delete('/:id', deleteBlogById);
 
 export default router;
