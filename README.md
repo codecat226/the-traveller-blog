@@ -12,3 +12,4 @@
 * MongoDB
 * Typescript
 * JWT
+* Express-validator
