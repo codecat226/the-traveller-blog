@@ -1,3 +1,14 @@
-# fullstack-practice
+# The Traveller (imaginary blog site)
 
-## React, RTK, Typescript, Express, MongoDB, JWT (authorization)
+## Technologies used:
+### Frontend:
+* React
+* Redux
+* React-router
+* Typescript
+
+### Backend:
+* Express
+* MongoDB
+* Typescript
+* JWT
