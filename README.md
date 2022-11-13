@@ -1,4 +1,4 @@
-# The Traveller Blog (hypothetical blog web app project)
+# The Traveller Blog (A blog web app project)
 
 ## Technologies/main packages used:
 ### Frontend:
