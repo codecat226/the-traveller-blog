@@ -15,3 +15,7 @@
 * Jsonwebtoken (JWT)
 * Express-validator
 * Node-mailer
+
+### Project has been deployed using Heroku (backend) and Netlify (frontend)
+#### [Click here to see the project demo](https://the-traveller-blog.netlify.app/)
+
