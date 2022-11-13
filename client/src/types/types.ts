@@ -71,3 +71,9 @@ export type ModalProps = {
   message: string;
   closeModal: Function;
 };
+
+export type PaginationProps = {
+  postsPerPage: number;
+  totalPosts: number;
+  paginate: (pageN: number) => void;
+};

@@ -7,7 +7,7 @@ import {
   VerifyUser,
 } from "../types/types";
 
-const baseUrl = "http://localhost:3007/api/users/";
+const baseUrl = "https://the-traveller-blog.herokuapp.com/api/users/";
 
 export const registerUser = async (values: UserRegister) => {
   const res = await axios.post(`${baseUrl}register`, values);

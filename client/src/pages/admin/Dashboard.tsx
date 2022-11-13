@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import useDebounce from "../../app/useDebounce";
 import BlogAdmin from "../../components/BlogAdmin";
+import Pagination from "../../components/Pagination";
 import { fetchBlogs } from "../../features/blogSlice";
 import { fetchUser, setUser } from "../../features/userSlice";
 import { refreshUser } from "../../services/userServices";
@@ -13,6 +14,18 @@ export const Dashboard = () => {
   const [search, setSearch] = useState<string>("");
   const debouncedValue = useDebounce<string>(search, 1000);
   const { blogs, error } = useAppSelector((state) => state.blogR);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage] = useState<number>(2);
+  const indexLast = currentPage * postsPerPage;
+  const indexFirst = indexLast - postsPerPage;
+  const currentPosts = blogs.slice(indexFirst, indexLast);
+  const totalPosts: number = blogs.length;
+
+  //pagination function
+  const paginate = (pageN: number): void => {
+    setCurrentPage(pageN);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     dispatch(fetchBlogs(search));
@@ -81,10 +94,15 @@ export const Dashboard = () => {
         >
           Add a new blog
         </button>
-        {blogs.map((blog) => {
+        {currentPosts.map((blog) => {
           return <BlogAdmin key={blog.id} blog={blog} />;
         })}
       </section>
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={totalPosts}
+        paginate={paginate}
+      />
     </main>
   );
 };

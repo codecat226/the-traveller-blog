@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, RequestHandler, Response } from 'express';
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
-
 import { securePassword, decryptPassword } from '../helpers/hashPassword';
 import { errorRes, successRes } from '../helpers/resHelper';
 import User, { UserDocument } from '../models/User';
@@ -37,8 +36,6 @@ export const loginAdmin: RequestHandler = async (req: Request, res: Response) =>
     if (req.cookies[`${(foundAdmin as UserDocument)._id}`]) {
       req.cookies[`${(foundAdmin as UserDocument)._id}`] = '';
     }
-
-    // if all goes well create jwt
     //create payload and import private key:
     // const payload: JwtPayload = { id: foundUser._id };
     const privKey: Secret = dev.app.priv_key;

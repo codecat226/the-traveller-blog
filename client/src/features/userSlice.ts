@@ -11,9 +11,12 @@ const initialState: InitialStateUser = {
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
-  const response = await axios.get("http://localhost:3007/api/users/profile", {
-    withCredentials: true,
-  });
+  const response = await axios.get(
+    "https://the-traveller-blog.herokuapp.com/api/users/profile",
+    {
+      withCredentials: true,
+    }
+  );
   return response.data.data;
 });
 

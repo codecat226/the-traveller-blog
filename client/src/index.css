@@ -290,6 +290,33 @@ div.form__section {
   font-size: 1.4rem;
 }
 
+/* PAGINATION */
+
+.paginationNav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  text-decoration: none;
+  list-style: none;
+  padding-bottom: 5rem;
+}
+
+.paginationNav__link {
+  background-color: transparent;
+  color: white;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+}
+
+.paginationNav__link:hover {
+  cursor: pointer;
+  background-color: var(--layoutColor);
+  color: white;
+}
+
 /* RESPONSIVE DESIGN */
 
 @media only screen and (min-width: 600) {

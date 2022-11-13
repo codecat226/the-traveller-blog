@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NewBlog } from "../types/types";
 
-const baseUrl = "http://localhost:3007/api/blogs/";
+const baseUrl = "https://the-traveller-blog.herokuapp.com/api/blogs/";
 
 export const editBlog = async (data: NewBlog, id: string) => {
   const res = await axios.post(`${baseUrl}${id}`, data);

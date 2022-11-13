@@ -12,7 +12,7 @@ export const fetchBlogs = createAsyncThunk(
   "blogs/fetchBlogs",
   async (searchQuery: string) => {
     const response = await axios.get(
-      `http://localhost:3007/api/blogs?search=${searchQuery}`,
+      `https://the-traveller-blog.herokuapp.com/api/blogs?search=${searchQuery}`,
       {
         withCredentials: true,
       }
