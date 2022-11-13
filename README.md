@@ -10,14 +10,29 @@
 * React-router
 * Typescript
 * Axios
+* Formik
+* Yup
 
 ### Backend:
 * Express
-* MongoDB
+* MongoDB (Mongo Atlas)
 * Typescript
 * Jsonwebtoken (JWT)
 * Express-validator
 * Node-mailer
+
+## Project highlights:
+* User management (Admin/User roles)
+* Authentication + Authorization
+* Protected routing 
+* Email verification on user sign-up/reset password
+* JWT and refresh token implementation (more secure)
+* Searchbar (backend implementation)
+* Pagination (frontend implementation)
+* CRUD operations on blog posts (Admin only)
+
+
+
 
 
 
