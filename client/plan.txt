@@ -103,6 +103,9 @@ DELETE BLOG
 // create post request for delete blog in blog services
 // on sucess --> redirect to dashboard
 
+13/11/2022 
 
+Implement pagination and searchbar for blogs
+Create form with search input and label on blogs page
 
 
