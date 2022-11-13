@@ -8,12 +8,18 @@ const initialState: InitialStateBlog = {
   blogs: [],
 };
 
-export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
-  const response = await axios.get("http://localhost:3007/api/blogs", {
-    withCredentials: true,
-  });
-  return response.data.data;
-});
+export const fetchBlogs = createAsyncThunk(
+  "blogs/fetchBlogs",
+  async (searchQuery: string) => {
+    const response = await axios.get(
+      `http://localhost:3007/api/blogs?search=${searchQuery}`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.data;
+  }
+);
 
 //use extraReducers to get the three promise states of fetching from API
 const blogSlice = createSlice({

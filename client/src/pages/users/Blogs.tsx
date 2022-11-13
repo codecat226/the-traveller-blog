@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import useDebounce from "../../app/useDebounce";
 import Blog from "../../components/Blog";
 import { fetchBlogs } from "../../features/blogSlice";
 import { setUser } from "../../features/userSlice";
@@ -7,10 +8,16 @@ import { refreshUser } from "../../services/userServices";
 
 export const Blogs = () => {
   const dispatch = useAppDispatch();
-  const { blogs, error, loading } = useAppSelector((state) => state.blogR);
+  const [search, setSearch] = useState<string>("");
+  const debouncedValue = useDebounce<string>(search, 1000);
+  const { blogs, error } = useAppSelector((state) => state.blogR);
   useEffect(() => {
-    dispatch(fetchBlogs());
-  }, [dispatch]);
+    dispatch(fetchBlogs(search));
+  }, [debouncedValue, dispatch, search]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   //get login state
   const { isLoggedIn } = useAppSelector((state) => state.userR);
@@ -38,16 +45,22 @@ export const Blogs = () => {
   return (
     <div className="blog">
       <main className="blog__main">
-        {loading && <p>Loading...</p>}
         {error && <p>Error</p>}
-        <form className="searchBar">
+        <form
+          className="searchBar"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <label className="searchLabel" htmlFor="search">
             Search for a blog:
           </label>
-          <input name="search" type="text" />
-          <button className="verificationBtn editBtn" type="submit">
-            Search
-          </button>
+          <input
+            name="search"
+            type="text"
+            value={search}
+            onChange={handleChange}
+          />
         </form>
         <section className="blogContainer">
           {blogs.map((blog) => {

@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import useDebounce from "../../app/useDebounce";
 import BlogAdmin from "../../components/BlogAdmin";
 import { fetchBlogs } from "../../features/blogSlice";
 import { fetchUser, setUser } from "../../features/userSlice";
@@ -9,10 +10,21 @@ import { refreshUser } from "../../services/userServices";
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { blogs, error, loading } = useAppSelector((state) => state.blogR);
+  const [search, setSearch] = useState<string>("");
+  const debouncedValue = useDebounce<string>(search, 1000);
+  const { blogs, error } = useAppSelector((state) => state.blogR);
+
   useEffect(() => {
-    dispatch(fetchBlogs());
-  }, [dispatch]);
+    dispatch(fetchBlogs(search));
+  }, [debouncedValue, dispatch, search]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(fetchBlogs(search));
+  }, [dispatch, debouncedValue, search]);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -43,8 +55,23 @@ export const Dashboard = () => {
 
   return (
     <main className="blog">
-      {loading && <p>Loading...</p>}
       {error && <p>Error</p>}
+      <form
+        className="searchBar"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <label className="searchLabel" htmlFor="search">
+          Search for a blog:
+        </label>
+        <input
+          name="search"
+          type="text"
+          value={search}
+          onChange={handleChange}
+        />
+      </form>
       <section className="blogContainer">
         <button
           className="verificationBtn editBtn"

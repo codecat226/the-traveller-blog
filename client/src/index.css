@@ -221,6 +221,7 @@ div.form__section {
 
 .blog {
   background-color: var(--mobileColor);
+  min-height: 100vh;
 }
 
 .blog__main {
@@ -271,7 +272,7 @@ div.form__section {
 
 .searchBar {
   margin-bottom: 2rem;
-  margin-top: 2rem;
+  padding-top: 3rem;
 }
 .searchBar input {
   border: none;
@@ -340,6 +341,7 @@ div.form__section {
     background-image: url("../public/map-bg.webp");
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100vh;
   }
 
   .profile {
