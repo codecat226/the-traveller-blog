@@ -30,6 +30,7 @@
 * Searchbar (backend implementation)
 * Pagination (frontend implementation)
 * CRUD operations on blog posts (Admin only)
+* Vanilla CSS for styling
 
 
 
