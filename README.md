@@ -16,6 +16,7 @@
 ### Backend:
 * Express
 * MongoDB (Mongo Atlas)
+* Mongoose
 * Typescript
 * Jsonwebtoken (JWT)
 * Express-validator
