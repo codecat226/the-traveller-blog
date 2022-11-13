@@ -16,6 +16,6 @@
 * Express-validator
 * Node-mailer
 
-### Project has been deployed using Heroku (backend) and Netlify (frontend)
-#### [CLICK HERE FOR PROJECT DEMO](https://the-traveller-blog.netlify.app/)
+## Project has been deployed using Heroku (backend) and Netlify (frontend)
+### [CLICK HERE FOR PROJECT DEMO](https://the-traveller-blog.netlify.app/)
 
