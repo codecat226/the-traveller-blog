@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import BlogAdmin from "../../components/BlogAdmin";
 import { fetchBlogs } from "../../features/blogSlice";
@@ -7,6 +8,7 @@ import { refreshUser } from "../../services/userServices";
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { blogs, error, loading } = useAppSelector((state) => state.blogR);
   useEffect(() => {
     dispatch(fetchBlogs());
@@ -44,6 +46,14 @@ export const Dashboard = () => {
       {loading && <p>Loading...</p>}
       {error && <p>Error</p>}
       <section className="blogContainer">
+        <button
+          className="verificationBtn editBtn"
+          onClick={() => {
+            navigate("/add-blog");
+          }}
+        >
+          Add a new blog
+        </button>
         {blogs.map((blog) => {
           return <BlogAdmin key={blog.id} blog={blog} />;
         })}

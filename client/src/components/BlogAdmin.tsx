@@ -33,6 +33,7 @@ const BlogAdmin = (props: BlogProps) => {
         <p>{publishDate}</p>
         <p>{body}</p>
         <button
+          className="verificationBtn editBtn"
           onClick={() => {
             handleEdit({ blog });
           }}
@@ -40,6 +41,7 @@ const BlogAdmin = (props: BlogProps) => {
           Edit this blog
         </button>
         <button
+          className="verificationBtn editBtn"
           onClick={() => {
             handleDelete({ blog });
           }}

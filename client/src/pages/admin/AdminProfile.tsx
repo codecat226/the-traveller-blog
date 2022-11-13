@@ -33,13 +33,15 @@ export const AdminProfile = () => {
   }, [dispatch, handleRefresh]);
 
   return (
-    <main>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error</p>}
-      <h2>Admin Profile</h2>
-      <p>Name: {user?.name}</p>
-      <p>Email: {user?.email}</p>
-      <p>Phone: {user?.phone}</p>
+    <main className="profile">
+      <section className="profile__section">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error</p>}
+        <h2>Admin Profile</h2>
+        <p>Name: {user?.name}</p>
+        <p>Email: {user?.email}</p>
+        <p>Phone: {user?.phone}</p>
+      </section>
     </main>
   );
 };

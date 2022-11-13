@@ -5,10 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { forgotPassword } from "../../services/userServices";
 import { ForgotUser } from "../../types/types";
-import { useNavigate } from "react-router-dom";
 
 export const ForgotPassword = () => {
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",

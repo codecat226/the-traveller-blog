@@ -69,11 +69,11 @@ export const AddBlog = () => {
   });
 
   return (
-    <div className="form">
+    <div className="editContainer">
       <ToastContainer />
-      <h1>Edit this blog:</h1>
-      <div className="card">
-        <form onSubmit={formik.handleSubmit} className="editForm">
+      <h1>Create new blog:</h1>
+      <div className="editContainer__centre">
+        <form onSubmit={formik.handleSubmit} className="editContainer__form">
           <div className="form__section">
             <label htmlFor="title">Title:</label>
             <input type="text" id="title" {...formik.getFieldProps("title")} />
@@ -121,14 +121,14 @@ export const AddBlog = () => {
           </div>
         </form>
       </div>
-      <button
+      {/* <button
         className="secondaryBtn"
         onClick={() => {
           navigate("/dashboard");
         }}
       >
         Go back to dashboard
-      </button>
+      </button> */}
     </div>
   );
 };

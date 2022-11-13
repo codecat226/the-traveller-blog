@@ -40,6 +40,15 @@ export const Blogs = () => {
       <main className="blog__main">
         {loading && <p>Loading...</p>}
         {error && <p>Error</p>}
+        <form className="searchBar">
+          <label className="searchLabel" htmlFor="search">
+            Search for a blog:
+          </label>
+          <input name="search" type="text" />
+          <button className="verificationBtn editBtn" type="submit">
+            Search
+          </button>
+        </form>
         <section className="blogContainer">
           {blogs.map((blog) => {
             return <Blog key={blog.id} blog={blog} />;
