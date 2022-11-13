@@ -46,6 +46,7 @@ export const DeleteBlog = () => {
       <div className="card">
         <div className="form__section">
           <button
+            className="deleteBtn"
             onClick={() => {
               handleClick();
             }}

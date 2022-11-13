@@ -73,7 +73,7 @@ export const AdminLogin = () => {
               navigate("/forgot-password");
             }}
           >
-            Forgot Password?
+            Forgot password?
           </button>
           <button
             className="secondaryBtn"

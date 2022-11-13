@@ -33,13 +33,15 @@ export const Profile = () => {
   }, [dispatch, handleRefresh]);
 
   return (
-    <main>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error</p>}
-      <h2>User Profile</h2>
-      <p>Name: {user?.name}</p>
-      <p>Email: {user?.email}</p>
-      <p>Phone: {user?.phone}</p>
+    <main className="profile">
+      <section className="profile__section">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error</p>}
+        <h1>User Profile</h1>
+        <p>Name: &nbsp;{user?.name}</p>
+        <p>Email: &nbsp;{user?.email}</p>
+        <p>Phone: &nbsp;{user?.phone}</p>
+      </section>
     </main>
   );
 };

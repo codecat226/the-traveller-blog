@@ -36,14 +36,16 @@ export const Blogs = () => {
   }, [dispatch, handleRefresh, isLoggedIn]);
 
   return (
-    <main className="blog">
-      {loading && <p>Loading...</p>}
-      {error && <p>Error</p>}
-      <section className="blogContainer">
-        {blogs.map((blog) => {
-          return <Blog key={blog.id} blog={blog} />;
-        })}
-      </section>
-    </main>
+    <div className="blog">
+      <main className="blog__main">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error</p>}
+        <section className="blogContainer">
+          {blogs.map((blog) => {
+            return <Blog key={blog.id} blog={blog} />;
+          })}
+        </section>
+      </main>
+    </div>
   );
 };

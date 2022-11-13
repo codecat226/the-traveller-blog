@@ -15,6 +15,7 @@ body {
   --secondaryFont: "DM Serif Display", serif;
   --tertiaryFont: "Cormorant", serif;
   --descriptionColor: rgb(199, 190, 181);
+  --mobileColor: rgb(78, 73, 68);
 }
 
 /* HOME PAGE */
@@ -81,7 +82,7 @@ footer {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: rgb(78, 73, 68);
+  background-color: var(--mobileColor);
 }
 
 h1 {
@@ -101,6 +102,15 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.form__contact {
+  text-align: center;
+}
+
+.form__contact h1 {
+  margin-bottom: 5rem;
+  font-size: 3rem;
 }
 
 .formikErrMsg {
@@ -183,14 +193,61 @@ div.form__section {
   text-align: center;
 }
 
+.div__contact {
+  font-size: 1.5rem;
+  font-family: var(--secondaryFont);
+}
+
+.div__contact a {
+  margin-left: 1rem;
+  color: var(--descriptionColor);
+  text-decoration: none;
+}
+
+.div__contact a:hover {
+  color: var(--descriptionColor);
+  text-decoration: underline;
+}
+
 /* BLOG PAGE */
 
+.blog {
+  background-color: var(--mobileColor);
+}
+
+.blog__main {
+  padding: 2rem 15rem;
+}
+
 .blogContainer {
-  margin: 1rem;
+  padding: 2rem 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .blogContainer__item {
   padding: 1rem 1rem 3rem 1rem;
+}
+
+/* DELETE BLOG PAGE */
+
+.deleteBtn {
+  margin: 1rem;
+  background-color: aliceblue;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  border: 0.2px solid var(--descriptionColor);
+  transition: ease-in 0.1s;
+  font-family: var(--secondaryFont);
+  font-size: 1.3rem;
+}
+
+.deleteBtn:hover {
+  background-color: var(--layoutColor);
+  cursor: pointer;
+  color: var(--descriptionColor);
 }
 
 /* RESPONSIVE DESIGN */
@@ -239,6 +296,20 @@ div.form__section {
   .form__section input {
     width: 17rem;
   }
+  .blog {
+    background-image: url("../public/map-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+/*  PROFILE PAGE */
+
+.profile {
+  margin: 0;
+  padding: 0;
+  color: var(--mobileColor);
+  padding: 2rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -301,5 +372,32 @@ div.form__section {
 
   .form__section input {
     width: 20rem;
+  }
+
+  .blog {
+    background-image: url("../public/map-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .profile {
+    background-image: url("../public/map-bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .profile__section {
+    background-color: rgb(78, 73, 68, 0.6);
+    height: 70vh;
+    width: 30rem;
+    color: var(--descriptionColor);
+    display: flex;
+    flex-direction: column;
+    padding-left: 3rem;
+    font-size: 1.5rem;
+    font-family: var(--secondaryFont);
   }
 }
