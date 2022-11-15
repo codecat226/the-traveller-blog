@@ -99,7 +99,6 @@ h1 {
 }
 
 .card {
-  margin-bottom: 5rem;
   font-family: var(--tertiaryFont);
   color: var(--descriptionColor);
 }
@@ -108,9 +107,11 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 6rem;
 }
 
 .form__contact {
+  padding-bottom: 7rem;
   text-align: center;
 }
 
@@ -142,7 +143,6 @@ form {
 }
 
 .buttonSection {
-  margin-top: 4rem;
   text-align: center;
 }
 
@@ -357,6 +357,9 @@ div.form__section {
   nav a:hover::before {
     transform: scaleX(0.8);
   }
+  form {
+    padding-bottom: 0rem;
+  }
   .form {
     margin: 0rem;
     background-image: url("../public/map-bg.webp");
@@ -366,8 +369,15 @@ div.form__section {
   .card {
     font-size: 1.5rem;
   }
+  .buttonSection {
+    margin-top: 4rem;
+    text-align: center;
+  }
   .form__section input {
     width: 20rem;
+  }
+  .form__contact {
+    padding-bottom: 0rem;
   }
 
   .blog {
@@ -413,15 +423,18 @@ div.form__section {
     padding: 2rem;
     margin-bottom: 2rem;
   }
+
   .editContainer h1 {
     margin-top: 4rem;
   }
+
   .home p {
     font-family: var(--tertiaryFont);
     font-size: 1.5rem;
     margin-bottom: 2rem;
     display: block;
   }
+
 }
 
 @media only screen and (min-width: 768px) {
@@ -429,6 +442,7 @@ div.form__section {
     font-size: 10rem;
     margin-bottom: 0rem;
   }
+
   .nav {
     display: flex;
     flex-direction: row;
@@ -438,12 +452,15 @@ div.form__section {
     font-size: 1.5rem;
     padding: 0.8rem;
   }
+
   .nav__link:hover {
     text-decoration: none;
   }
+
   .nav__link {
     padding: 0.5rem 1rem;
   }
+
   .nav__link::before {
     font-size: 0.4rem;
     content: "";
@@ -465,6 +482,9 @@ div.form__section {
   footer.nav {
     padding: 0rem;
   }
+  form {
+    padding-bottom: 0rem;
+  }
 
   .form {
     background-image: url("../public/map-bg.webp");
@@ -478,12 +498,20 @@ div.form__section {
     font-size: 1.5rem;
   }
 
+  .buttonSection {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
   .formikErrMsg {
     font-size: 1rem;
   }
 
   .form__section input {
     width: 20rem;
+  }
+  .form__contact {
+    padding-bottom: 0rem;
   }
 
   .blog {
