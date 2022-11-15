@@ -35,7 +35,7 @@ export const Register = () => {
   return (
     <div className="form">
       <ToastContainer />
-      <h1>Register:</h1>
+      <h1>Become a member:</h1>
       <div className="card">
         <form onSubmit={formik.handleSubmit}>
           <div className="form__section">

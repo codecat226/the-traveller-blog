@@ -11,11 +11,11 @@ body {
 
 :root {
   --layoutColor: rgba(40, 83, 69);
+  --descriptionColor: rgb(199, 190, 181);
+  --mobileColor: rgb(78, 73, 68);
   --headingFont: "Abril Fatface", cursive;
   --secondaryFont: "DM Serif Display", serif;
   --tertiaryFont: "Cormorant", serif;
-  --descriptionColor: rgb(199, 190, 181);
-  --mobileColor: rgb(78, 73, 68);
 }
 
 /* HOME PAGE */
@@ -28,14 +28,20 @@ main.home {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 100%;
   font-family: var(--headingFont);
+  padding-bottom: 3rem;
 }
 
 .home__header {
   color: var(--descriptionColor);
-  font-size: 4rem;
-  padding: 2rem;
+  font-size: 6rem;
+  margin-bottom: 10rem;
+}
+
+.home p {
+  display: none;
 }
 
 /* NAVBAR, FOOTER */
@@ -322,7 +328,7 @@ div.form__section {
 @media only screen and (min-width: 600) {
   .home__header {
     font-size: 6rem;
-    padding: 0rem;
+    margin-bottom: 3rem;
   }
   .nav__link {
     padding: 0.3rem;
@@ -410,12 +416,18 @@ div.form__section {
   .editContainer h1 {
     margin-top: 4rem;
   }
+  .home p {
+    font-family: var(--tertiaryFont);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    display: block;
+  }
 }
 
 @media only screen and (min-width: 768px) {
   .home__header {
     font-size: 10rem;
-    padding: 0rem;
+    margin-bottom: 0rem;
   }
   .nav {
     display: flex;
@@ -523,5 +535,11 @@ div.form__section {
   .form__section label {
     font-size: 1.2rem;
     width: 8rem;
+  }
+  .home p {
+    font-family: var(--tertiaryFont);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    display: block;
   }
 }
