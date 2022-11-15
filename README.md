@@ -1,7 +1,7 @@
 # The Traveller Blog (A blog web app project)
 
 ## Project has been deployed using Heroku (backend) and Netlify (frontend)
-### [CLICK HERE FOR PROJECT DEMO](https://the-traveller-blog.netlify.app/)
+### [CLICK HERE FOR PROJECT DEMO](https://the-traveller-blog-site.netlify.app/)
 
 ## Technologies/main packages used:
 ### Frontend:
