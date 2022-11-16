@@ -45,7 +45,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
       email,
       subject: 'Account verification',
       html: `
-      <p>Hi ${name}!\n<a href="http://localhost:3000/activate-account/${token}">Please click on this link to verify your email address.</a></p>
+      <p>Hi ${name}!\n<a href="https://the-traveller-blog-site.netlify.app/activate-account/${token}">Please click on this link to verify your email address.</a></p>
       `
     };
 
@@ -121,7 +121,6 @@ export const verifyUser: RequestHandler = async (
         if (err) {
           return errorRes(res, 401, 'link has expired, please register again');
         }
-        console.log('decoded from verify user controller:', decoded);
         const { name, email, hashPW, phone } = decoded as VerifyTokenInterface;
         //check if user exists
         const foundUser = await User.findOne({ email: email });

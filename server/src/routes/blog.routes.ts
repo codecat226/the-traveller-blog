@@ -14,7 +14,7 @@ const router = express.Router();
 // all routes start with /api/blogs
 router.get('/', isAuthorised, getAllBlogs);
 router.get('/:id', getBlogById);
-router.post('/create', blogValidaton, createBlog);
+router.post('/', blogValidaton, createBlog);
 router.post('/:id', updateBlog);
 router.delete('/:id', deleteBlogById);
 

@@ -9,7 +9,7 @@ export const editBlog = async (data: NewBlog, id: string) => {
 };
 
 export const addBlog = async (data: NewBlog) => {
-  const res = await axios.post(`${baseUrl}create`, data);
+  const res = await axios.post(`${baseUrl}`, data);
   return res.data;
 };
 

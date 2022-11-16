@@ -40,7 +40,7 @@ export const getBlogById: RequestHandler = async (req: Request, res: Response) =
   }
 };
 
-// /create (POST)
+// / (POST)
 export const createBlog: RequestHandler = async (
   req: Request,
   res: Response,

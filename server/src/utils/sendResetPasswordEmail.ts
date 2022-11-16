@@ -25,7 +25,7 @@ export const sendPasswordEmail = async (
       from: dev.smtp.auth_email,
       to: email, //list of receivers
       subject: title,
-      html: `<p>Hi ${name}!\n<a href="http://localhost:3000/reset-password/${token}">\nPlease click on this link to reset password.</p>`
+      html: `<p>Hi ${name}!\n<a href="https://the-traveller-blog-site.netlify.app/reset-password/${token}">\nPlease click on this link to reset password.</p>`
     };
 
     await transporter.sendMail(mailOptions, (error, info) => {
