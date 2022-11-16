@@ -62,7 +62,9 @@ export const EditBlog = () => {
     onSubmit: async (values: NewBlog) => {
       try {
         const res = await editBlog(values, id);
-        toast.success(res.message);
+        if (res.status === 201) {
+          toast.success(res.data.message);
+        }
       } catch (error: any) {
         console.log(error);
         toast.error(error.response.data.message);

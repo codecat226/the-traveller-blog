@@ -55,10 +55,6 @@ export type UserLogin = {
   password: string;
 };
 
-export type VerifyUser = {
-  email: string;
-};
-
 export type ForgotUser = {
   email: string;
 };

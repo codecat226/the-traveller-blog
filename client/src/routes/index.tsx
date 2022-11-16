@@ -55,7 +55,12 @@ const Index = () => {
           {!isLoggedIn && (
             <Route path="/register" element={<Register />}></Route>
           )}
-          <Route path="/activate-account/:token" element={<Activate />}></Route>
+          {!isLoggedIn && (
+            <Route
+              path="/activate-account/:token"
+              element={<Activate />}
+            ></Route>
+          )}
           {!isLoggedIn && <Route path="/login" element={<Login />}></Route>}
           {!isLoggedIn && (
             <Route path="/admin-login" element={<AdminLogin />}></Route>

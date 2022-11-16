@@ -35,8 +35,8 @@ const Navbar = () => {
       if (res.status === 200) {
         dispatch(setLoggedOut());
         dispatch(removeAdmin());
-        navigate("/home");
         localStorage.clear();
+        navigate("/home");
       }
     } catch (error: any) {
       console.log(error);

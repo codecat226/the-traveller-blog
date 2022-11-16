@@ -25,8 +25,10 @@ export const Register = () => {
     onSubmit: async (values: UserRegister, { resetForm }) => {
       try {
         const res = await registerUser(values);
-        toast.success(res.message);
-        resetForm({});
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          resetForm({});
+        }
       } catch (error: any) {
         toast.error(error.response.data.message);
       }

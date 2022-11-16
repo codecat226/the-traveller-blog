@@ -59,8 +59,10 @@ export const AddBlog = () => {
     onSubmit: async (values: NewBlog) => {
       try {
         const res = await addBlog(values);
-        toast.success(res.message);
-        navigate("/dashboard");
+        if (res.status === 201) {
+          toast.success(res.data.message);
+          navigate("/dashboard");
+        }
       } catch (error: any) {
         console.log(error);
         toast.error(error.response.data.message);

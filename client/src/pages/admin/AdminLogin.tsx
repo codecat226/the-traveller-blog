@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { setAdmin, setLoggedIn } from "../../features/userSlice";
 import { UserLogin } from "../../types/types";
-import { loginAdmin } from "../../services/userServices";
+import { loginAdmin } from "../../services/adminServices";
 
 export const AdminLogin = () => {
   const navigate = useNavigate();

@@ -20,9 +20,11 @@ export const ResetPassword = () => {
     onSubmit: async (values: ResetUser, { resetForm }) => {
       try {
         const res = await resetPassword(values, token);
-        toast.success(res.message);
-        resetForm({});
-        navigate("/login");
+        if (res.status === 201) {
+          toast.success(res.data.message);
+          resetForm({});
+          navigate("/login");
+        }
       } catch (error: any) {
         toast.error(error.response.data.message);
       }
@@ -47,7 +49,9 @@ export const ResetPassword = () => {
             ) : null}
           </div>
           <div className="form__section">
-            <button type="submit">Reset Password</button>
+            <button className="verificationBtn" type="submit">
+              Reset Password
+            </button>
           </div>
         </form>
       </div>

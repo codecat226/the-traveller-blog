@@ -33,8 +33,10 @@ export const DeleteBlog = () => {
   const handleClick = async () => {
     try {
       const res = await deleteBlog(id);
-      toast.success(res.message);
-      navigate("/dashboard");
+      if (res.status === 200) {
+        toast.success(res.data.message);
+        navigate("/dashboard");
+      }
     } catch (error: any) {
       toast.error(error.response.data.message);
     }

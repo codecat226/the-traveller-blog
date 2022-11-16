@@ -193,7 +193,12 @@ export const logoutUser: RequestHandler = async (req: Request, res: Response) =>
       }
       //clear cookies
       req.cookies[`${(decoded as TokenInterface).id}`] = '';
-      res.clearCookie(`${(decoded as TokenInterface).id}`);
+      res.clearCookie(`${(decoded as TokenInterface).id}`, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        path: '/'
+      });
     });
     res.status(200).json({
       message: 'user logged out'
@@ -237,7 +242,12 @@ export const createRefreshToken: RequestHandler = async (
       }
       //if the token IS verified --> reset OLD cookies in res and req header
       req.cookies[`${(decoded as TokenInterface).id}`] = '';
-      res.clearCookie(`${(decoded as TokenInterface).id}`);
+      res.clearCookie(`${(decoded as TokenInterface).id}`, {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        path: '/'
+      });
 
       //generate the NEW token:
       // const payload: JwtPayload = { id: (decoded as TokenInterface).id };

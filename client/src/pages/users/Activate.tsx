@@ -25,6 +25,7 @@ export const Activate = () => {
       <div className="card">
         <div className="form__section">
           <button
+            className="verificationBtn"
             onClick={() => {
               handleClick();
             }}
