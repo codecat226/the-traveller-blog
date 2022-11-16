@@ -24,11 +24,13 @@ export const AdminLogin = () => {
     onSubmit: async (values: UserLogin, { resetForm }) => {
       try {
         const res = await loginAdmin(values);
-        dispatch(setLoggedIn());
-        dispatch(setAdmin());
-        toast.success(res.message);
-        resetForm({});
-        navigate("/dashboard");
+        if (res.status === 200) {
+          dispatch(setLoggedIn());
+          dispatch(setAdmin());
+          toast.success(res.message);
+          resetForm({});
+          navigate("/dashboard");
+        }
       } catch (error: any) {
         console.log(error);
         toast.error(error.response.data.message);
