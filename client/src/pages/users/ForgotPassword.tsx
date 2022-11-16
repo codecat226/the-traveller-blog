@@ -17,9 +17,10 @@ export const ForgotPassword = () => {
     onSubmit: async (values: ForgotUser, { resetForm }) => {
       try {
         const res = await forgotPassword(values);
-        // set the token into the store so it can be used in the rest of the project
-        toast.success(res.message);
-        resetForm({});
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          resetForm({});
+        }
       } catch (error: any) {
         toast.error(error.response.data.message);
       }

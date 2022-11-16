@@ -57,7 +57,7 @@ export const resendVerify = async (values: VerifyUser) => {
 
 export const forgotPassword = async (values: ForgotUser) => {
   const res = await axios.post(`${baseUrl}forgot-password`, values);
-  return res.data;
+  return res;
 };
 
 export const resetPassword = async (

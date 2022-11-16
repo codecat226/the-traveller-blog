@@ -37,7 +37,6 @@ export const loginAdmin: RequestHandler = async (req: Request, res: Response) =>
       req.cookies[`${(foundAdmin as UserDocument)._id}`] = '';
     }
     //create payload and import private key:
-    // const payload: JwtPayload = { id: foundUser._id };
     const privKey: Secret = dev.app.priv_key;
 
     // create the token

@@ -45,7 +45,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
       email,
       subject: 'Account verification',
       html: `
-      <p>Hi ${name}!<a href="https://the-traveller-blog-site.netlify.app/activate-account/${token}">Please click on this link to verify your email address.</a></p>
+      <p>Hi ${name}!<a href="https://the-traveller-blog-site.netlify.app">Please click on this link to verify your email address.</a></p>
       `
     };
 
@@ -75,17 +75,12 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
       if (req.cookies[`${(foundUser as UserDocument)._id}`]) {
         req.cookies[`${(foundUser as UserDocument)._id}`] = '';
       }
-
       // if all goes well create jwt
-      //create payload and import private key:
-      // const payload: JwtPayload = { id: foundUser._id };
       const privKey: Secret = dev.app.priv_key;
-
       // create the token
       const token = jwt.sign({ id: foundUser._id }, String(privKey), {
         expiresIn: '3m'
       });
-
       // create cookie to send the token inside
       res.cookie(String(foundUser._id), token, {
         // cookies sent to clients can be set for a specific path, if necessary
@@ -165,10 +160,6 @@ export const showProfile: RequestHandler = async (req: Request, res: Response) =
       return errorRes(res, 404, 'User does not exist');
     }
     successRes(res, 200, 'user found', foundUser);
-    // res.status(200).json({
-    //   message: 'user found',
-    //   foundUser
-    // });
   } catch (error: any) {
     return res.status(500).send({
       message: error.message
@@ -244,7 +235,6 @@ export const createRefreshToken: RequestHandler = async (
           message: 'Could not verify token'
         });
       }
-      // console.log('old token :', oldToken);
       //if the token IS verified --> reset OLD cookies in res and req header
       req.cookies[`${(decoded as TokenInterface).id}`] = '';
       res.clearCookie(`${(decoded as TokenInterface).id}`);
@@ -254,8 +244,6 @@ export const createRefreshToken: RequestHandler = async (
       const newToken = jwt.sign({ id: (decoded as TokenInterface).id }, String(privKey), {
         expiresIn: '2m'
       });
-
-      // console.log('new token:', newToken);
       // send the NEW token inside cookie
       res.cookie(String((decoded as TokenInterface).id), newToken, {
         //Cookies sent to clients can be set for a specific path, not just a domain.
@@ -276,45 +264,6 @@ export const createRefreshToken: RequestHandler = async (
     });
   }
 };
-
-// POST method /resend-verify
-// export const resendVerifyUser: RequestHandler = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { email } = req.body;
-
-//     const foundUser = await User.findOne({ email: email });
-//     if (foundUser) {
-//       if (foundUser.isVerified) {
-//         return errorRes(res, 400, 'User already verified.');
-//       } else {
-//     //create jwt token, pass user input as payload in token
-//     const privKey: Secret = dev.app.priv_key;
-//     const token = jwt.sign({ email }, String(privKey), {
-//       expiresIn: '15m'
-//     });
-
-//     const emailData = {
-//       email,
-//       subject: 'Account verification',
-//       html: `
-//       <p>Hi ${foundUser.name}!\n<a href="http://localhost:3007/api/users/verify?token=${token}">Please click on this link to verify your email address.</a></p>
-//       `
-//     };
-//     sendEmail(emailData);
-//     return successRes(res, 200, 'Please check your email address to verify your account.');
-//     } else {
-//       return errorRes(res, 400, 'No user associated with this email address.');
-//     }
-//   } catch (error) {
-//     res.status(500).send({
-//       message: 'server error'
-//     });
-//   }
-// };
 
 // POST method /forgot-password
 export const forgotPassword: RequestHandler = async (
