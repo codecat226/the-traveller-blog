@@ -16,7 +16,7 @@ export const registerUser = async (values: UserRegister) => {
 
 export const verifyUser = async (token: string | undefined) => {
   const res = await axios.post(`${baseUrl}verify/${token}`);
-  return res.data;
+  return res;
 };
 
 export const loginUser = async (values: UserLogin) => {

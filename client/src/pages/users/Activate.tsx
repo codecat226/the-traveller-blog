@@ -10,8 +10,10 @@ export const Activate = () => {
   const handleClick = async () => {
     try {
       const res = await verifyUser(token);
-      toast.success(res.message);
-      navigate("/login");
+      if (res.status === 200) {
+        toast.success(res.data.message);
+        navigate("/login");
+      }
     } catch (error: any) {
       toast.error(error.response.data.message);
     }

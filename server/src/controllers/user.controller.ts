@@ -45,7 +45,7 @@ export const registerUser: RequestHandler = async (req: Request, res: Response) 
       email,
       subject: 'Account verification',
       html: `
-      <p>Hi ${name}!\n<a href="https://the-traveller-blog-site.netlify.app/activate-account/${token}">Please click on this link to verify your email address.</a></p>
+      <p>Hi ${name}!<a href="https://the-traveller-blog-site.netlify.app/activate-account/${token}">Please click on this link to verify your email address.</a></p>
       `
     };
 
