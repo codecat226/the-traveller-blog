@@ -51,7 +51,9 @@ export const loginAdmin: RequestHandler = async (req: Request, res: Response) =>
       // remember to make expiration LESS than the token expiration
       expires: new Date(Date.now() + 1000 * 170),
       // Setting httpOnly prevents client-side scripts from accessing data
-      httpOnly: true
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true
     });
     //send the token to the frontend
     return res.status(200).send({ message: 'login success', token: token });
