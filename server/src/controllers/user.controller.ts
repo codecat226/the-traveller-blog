@@ -93,7 +93,8 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
         // remember to make expiration LESS than the token expiration
         expires: new Date(Date.now() + 1000 * 170),
         // Setting httpOnly prevents client-side scripts from accessing data
-        httpOnly: true
+        httpOnly: true,
+        sameSite: 'none'
       });
       //send the token to the frontend
       return res.status(200).send({ message: 'login success', token: token });
@@ -121,6 +122,7 @@ export const verifyUser: RequestHandler = async (
         if (err) {
           return errorRes(res, 401, 'link has expired, please register again');
         }
+        console.log('decoded from verify user controller:', decoded);
         const { name, email, hashPW, phone } = decoded as VerifyTokenInterface;
         //check if user exists
         const foundUser = await User.findOne({ email: email });
@@ -258,7 +260,8 @@ export const createRefreshToken: RequestHandler = async (
         //Cookies sent to clients can be set for a specific path, not just a domain.
         path: '/',
         expires: new Date(Date.now() + 1000 * 100),
-        httpOnly: true
+        httpOnly: true,
+        sameSite: 'none'
       });
       // set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request
       (req as CustomRequest).id = (decoded as TokenInterface).id;

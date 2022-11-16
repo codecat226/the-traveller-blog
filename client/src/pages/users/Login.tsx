@@ -24,10 +24,12 @@ export const Login = () => {
     onSubmit: async (values: UserLogin, { resetForm }) => {
       try {
         const res = await loginUser(values);
-        dispatch(setLoggedIn());
-        toast.success(res.message);
-        resetForm({});
-        navigate("/profile");
+        if (res.status === 200) {
+          dispatch(setLoggedIn());
+          toast.success(res.message);
+          resetForm({});
+          navigate("/profile");
+        }
       } catch (error: any) {
         console.log(error);
         toast.error(error.response.data.message);
