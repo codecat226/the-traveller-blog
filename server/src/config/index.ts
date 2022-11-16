@@ -4,7 +4,7 @@ dotenv.config();
 export const dev = {
   app: {
     port: process.env.PORT || 4004,
-    priv_key: process.env.JWT_SECRET || ''
+    priv_key: process.env.JWT_SECRET || 'secret'
   },
   db: {
     mongo_url: process.env.MONGO_URL || ''

@@ -94,7 +94,8 @@ export const loginUser: RequestHandler = async (req: Request, res: Response) => 
         expires: new Date(Date.now() + 1000 * 170),
         // Setting httpOnly prevents client-side scripts from accessing data
         httpOnly: true,
-        sameSite: 'none'
+        sameSite: 'none',
+        secure: true
       });
       //send the token to the frontend
       return res.status(200).send({ message: 'login success', token: token });
@@ -261,7 +262,8 @@ export const createRefreshToken: RequestHandler = async (
         path: '/',
         expires: new Date(Date.now() + 1000 * 100),
         httpOnly: true,
-        sameSite: 'none'
+        sameSite: 'none',
+        secure: true
       });
       // set the id (which comes from payload when we SIGNED the token here so that it can be accessed in the user profile route request
       (req as CustomRequest).id = (decoded as TokenInterface).id;

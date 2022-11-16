@@ -21,12 +21,12 @@ export const verifyUser = async (token: string | undefined) => {
 
 export const loginUser = async (values: UserLogin) => {
   const res = await axios.post(`${baseUrl}login`, values);
-  return res.data;
+  return res;
 };
 
 export const loginAdmin = async (values: UserLogin) => {
   const res = await axios.post(`${baseUrl}login`, values);
-  return res.data;
+  return res;
 };
 
 export const userProfile = async () => {

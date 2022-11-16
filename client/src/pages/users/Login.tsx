@@ -26,7 +26,7 @@ export const Login = () => {
         const res = await loginUser(values);
         if (res.status === 200) {
           dispatch(setLoggedIn());
-          toast.success(res.message);
+          toast.success(res.data.message);
           resetForm({});
           navigate("/profile");
         }

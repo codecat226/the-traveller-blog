@@ -27,7 +27,7 @@ export const AdminLogin = () => {
         if (res.status === 200) {
           dispatch(setLoggedIn());
           dispatch(setAdmin());
-          toast.success(res.message);
+          toast.success(res.data.message);
           resetForm({});
           navigate("/dashboard");
         }

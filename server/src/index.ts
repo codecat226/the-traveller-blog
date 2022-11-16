@@ -17,7 +17,7 @@ const PORT = dev.app.port;
 // middlewares
 app.use(
   cors({
-    origin: 'https://the-traveller-blog-site.netlify.app',
+    origin: ['https://the-traveller-blog-site.netlify.app', 'http://localhost:3000'],
     credentials: true
   })
 );
