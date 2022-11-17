@@ -370,10 +370,7 @@ div.form__section {
   .card {
     font-size: 1.5rem;
   }
-  .buttonSection {
-    margin-top: 4rem;
-    text-align: center;
-  }
+
   .form__section input {
     width: 20rem;
   }
@@ -496,11 +493,6 @@ div.form__section {
 
   .card {
     font-size: 1.5rem;
-  }
-
-  .buttonSection {
-    margin-top: 4rem;
-    text-align: center;
   }
 
   .formikErrMsg {
