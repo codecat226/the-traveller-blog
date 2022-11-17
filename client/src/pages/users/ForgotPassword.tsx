@@ -37,7 +37,7 @@ export const ForgotPassword = () => {
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" {...formik.getFieldProps("email")} />
             {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
+              <div className="formikErrMsg">{formik.errors.email}</div>
             ) : null}
           </div>
           <div className="form__section">

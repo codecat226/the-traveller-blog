@@ -7,6 +7,7 @@ body {
   margin: 0;
   padding: 0;
   color: var(--descriptionColor);
+  background-color: var(--mobileColor);
 }
 
 :root {
@@ -36,8 +37,8 @@ main.home {
 
 .home__header {
   color: var(--descriptionColor);
-  font-size: 6rem;
-  margin-bottom: 10rem;
+  font-size: 4rem;
+  margin-bottom: 7rem;
 }
 
 .home p {
@@ -107,7 +108,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 6rem;
+  padding-bottom: 1rem;
 }
 
 .form__contact {
@@ -239,7 +240,7 @@ div.form__section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .blogContainer__item {
@@ -358,7 +359,7 @@ div.form__section {
     transform: scaleX(0.8);
   }
   form {
-    padding-bottom: 0rem;
+    padding-bottom: 4rem;
   }
   .form {
     margin: 0rem;
@@ -434,7 +435,6 @@ div.form__section {
     margin-bottom: 2rem;
     display: block;
   }
-
 }
 
 @media only screen and (min-width: 768px) {
@@ -483,7 +483,7 @@ div.form__section {
     padding: 0rem;
   }
   form {
-    padding-bottom: 0rem;
+    padding-bottom: 6rem;
   }
 
   .form {
