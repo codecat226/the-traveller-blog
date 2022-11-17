@@ -38,20 +38,18 @@ export const AddBlog = () => {
     body: "",
   };
 
-  // const parseDateString(value:Date, originalValue:undefined) => {
-  //   const parsedDate = isDate(originalValue)
-  //     ? originalValue
-  //     : parse(originalValue, "yyyy-MM-dd", new Date());
-
-  //   return parsedDate;
-  // }
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: initialState,
     validationSchema: Yup.object({
       title: Yup.string().required("Required"),
       author: Yup.string().required("Required"),
-      publishDate: Yup.string().required("Required"),
+      publishDate: Yup.string()
+        .required("Required")
+        .matches(
+          /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/,
+          "Must be in mm/dd/yyyy format"
+        ),
       body: Yup.string()
         .min(20, "Body must be at least 20 characters")
         .required("Required"),

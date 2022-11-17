@@ -20,7 +20,11 @@ export const Register = () => {
       password: Yup.string()
         .min(8, "Must be at least 8 characters")
         .required("Required"),
-      phone: Yup.string().required("Required"),
+      phone: Yup.string()
+        .required("Required")
+        .matches(/^[0-9]+$/, "Must be only digits")
+        .min(10, "Must be exactly 10 digits")
+        .max(10, "Must be exactly 10 digits"),
     }),
     onSubmit: async (values: UserRegister, { resetForm }) => {
       try {
