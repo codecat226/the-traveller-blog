@@ -3,6 +3,11 @@
 ## Project has been deployed using Heroku (backend) and Netlify (frontend)
 ### [CLICK HERE FOR PROJECT DEMO](https://the-traveller-blog-site.netlify.app/)
 
+### You can try the admin login with these credentials:
+#### email: test@gmail.com
+#### password: 11111111
+#### !Please do not delete all dummy blog data.
+
 ## Technologies/main packages used:
 ### Frontend:
 * React
